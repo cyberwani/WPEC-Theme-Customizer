@@ -43,7 +43,9 @@ class WPEC_Theme_Customizer {
 		//echo admin stylesheet
 		add_action('admin_head', array($this, 'admin_styles'));
 	}
-	
+	/**
+	 * alert shown on plugin activation
+	 */
 	public function activation_nag(){
 	$selected_gateways = get_option( 'wpec_theme_customizer_nag' );
 	
@@ -54,8 +56,9 @@ class WPEC_Theme_Customizer {
 	   to take advantage of these new features.', admin_url( 'options-general.php?page=wpec_theme_customizer_settings' ), admin_url( 'options-general.php?page=wpec_theme_customizer_settings&wpec_theme_customizer_notices=gc_ignore' ) ) ?></p>
 	  </div> <?php
 	}
-
- 
+	/**
+	 * remove the alert
+	 */ 
 	public function remove_nag(){
 	  if ( isset( $_REQUEST['wpec_theme_customizer_notices'] ) && $_REQUEST['wpec_theme_customizer_notices'] == 'gc_ignore' ) {
 	   update_option( 'wpec_theme_customizer_nag', true );
@@ -63,13 +66,16 @@ class WPEC_Theme_Customizer {
 	  exit();
 	  }
 	 }
-
-
-	
+	/**
+	 * add settings page
+	 */	
 	public function add_settings_page(){
 		add_options_page('WPEC Theme Customizer', 'WPEC Theme Customizer', 'manage_options', 'wpec_theme_customizer_settings', array($this ,'settings_page_callback'));
 	}			
-	
+	/**
+	 * copy plugin template files into current themes wp-e-commerce folder. If this folder
+	 * doesn't exist then it will be created
+	 */
 	public function migrate_files(){
 		//theme directory	
 		$theme_dir = get_template_directory().'/';
@@ -88,7 +94,10 @@ class WPEC_Theme_Customizer {
 			copy($plugin_templates.$file,$destination.$file);
 		}
 	}
-	
+	/**
+	 * callback for settings page - will migrate files if $_POST['wp_tc_checkboxes'] contains 
+	 * checked files
+	 */
 	public function settings_page_callback(){
 	?>
 	
@@ -142,19 +151,25 @@ class WPEC_Theme_Customizer {
 		</div>
 	<?php
 	}
-
+	/**
+	 * echo out admin stylesheet
+	 */
 	public function admin_styles(){
         echo '<!-- styles for wpec_theme_customizer backend -->
               <link rel="stylesheet" type="text/css" href="'.DIRECTORY.'/css/admin-styles.css'. '">';
 	} 
-
+	/**
+	 * create 'Customize' button in wp admin bar
+	 */
 	public function admin_bar_menu() {
 		global $wp_admin_bar;
 	    $theme_title = strtolower(get_current_theme());
 		$wp_admin_bar -> add_menu(array('id' => '_d_gandalf', 'href' => get_bloginfo('url') . '/wp-admin/admin.php?customize=on&theme='.$theme_title, 'title' => '<span class="ab-icon ab-gandaf"></span><span class="ab-label">Customize</span>', 'meta' => array('title' => 'Customize theme live', ), ));
 		
 	}
-
+	/**
+	 * enqueue the scripts and styles
+	 */
 	public function enqueue_scripts() {
 		//css
 		wp_enqueue_style('wpsc-custom-buttons', DIRECTORY . '/css/custom-buttons.css');
@@ -164,7 +179,9 @@ class WPEC_Theme_Customizer {
 		wp_enqueue_script('imagesLoaded', DIRECTORY.'/js/jquery.imagesloaded.min.js', array('masonry'));
 		wp_enqueue_script('wpec-masonry', DIRECTORY . '/js/wpec-masonry.js', array('masonry','imagesLoaded'));
 	}
-
+	/**
+	 * add body classes for button styles
+	 */
 	public function add_body_classes($classes) {
 		$button_style = get_option("wpec_toapi_button_style");
 		if ($button_style != 'None' && $button_style != null)
@@ -173,7 +190,10 @@ class WPEC_Theme_Customizer {
 			$classes[] = 'has-sidebar';
 		return $classes;
 	}
-	
+	/**
+	 * scan the current theme directory for template files and
+	 * print out those found
+	 */
 	public function scan_theme_dir(){
 		$theme_dir = get_template_directory().'/';
 		$theme_files = scandir($theme_dir);
@@ -190,7 +210,9 @@ class WPEC_Theme_Customizer {
 			echo 'No <code>wp-e-commerce</code> folder found in theme. It will be created upon template migration.';
 		}
 	}
-	
+	/**
+	 * list templates included with the plugin
+	 */
 	public function list_templates(){
 		$templates = scandir(dirname(__FILE__).'/templates/');
 		echo "<div id='template-checkboxes'>";
@@ -203,7 +225,9 @@ class WPEC_Theme_Customizer {
 		}
 		echo "</div>";
 	}
-
+	/**
+	 * echo raw styles into header
+	 */
 	public function header_output() {
 		//get link colors and fonts
 		$color = get_option("_d_link_color");
@@ -278,14 +302,14 @@ class WPEC_Theme_Customizer {
 		</style>
 		";
 	}
-
+	/**
+	 * Action hook for Theme Customizer (Gandalf)
+	 * Use Radagast class to add controls in a cleaner way
+	 * Add sections with $gandalf
+	 * @param $gandalf instance of ThemeCustomizer passed by WPCore
+	 */
 	public function populate_gandalf($gandalf) {
-		/**
-		 * Action hook for Theme Customizer (Gandalf)
-		 * Use Radagast class to add controls in a cleaner way
-		 * Add sections with $gandalf
-		 * @param $gandalf instance of ThemeCustomizer passed by WPCore
-		 */
+		
 		//--------------------wpec products --------------------//
 		$radagast = new Radagast_The_Brown($gandalf);
 
