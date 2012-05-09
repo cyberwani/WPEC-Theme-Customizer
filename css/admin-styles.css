@@ -1,0 +1,21 @@
+/**
+ * 	Styles for admin backend
+ */
+
+#template-checkboxes {
+margin: 20px 10px;
+}
+#template-checkboxes input[type='checkbox']{
+margin: 5px 10px 0px 10px;
+}
+.file-icon{
+	background:url('../images/php-icon.png') no-repeat center center;
+	width:20px;
+	height:20px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.file-wrapper{
+	margin:4px 0px 4px 20px;
+}

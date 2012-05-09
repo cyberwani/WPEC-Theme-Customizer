@@ -1,0 +1,199 @@
+/**
+ * 	CSS for custom buttons chosen through Theme Customizer
+ */
+.wpsc-button:hover {
+	border:1px solid #444;
+} 
+.wpsc-button{
+	text-shadow: 0px -1px rgba(0, 0, 0, 0.8);
+}
+/**
+ * 	Blue
+ */
+body.wpsc-custom-button-blue .wpsc_buy_button,  
+body.wpsc-custom-button-blue .wpsc-button-primary,
+body.wpsc-custom-button-blue input[type="submit"]{
+	-moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5) );
+	background:-moz-linear-gradient( center top, #79bbff 5%, #378de5 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5');
+	background-color:#79bbff;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #84bbf3;
+	display:inline-block;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #528ecc;
+}
+body.wpsc-custom-button-blue .wpsc_buy_button:hover,
+body.wpsc-custom-button-blue .wpsc-button-primary:hover,
+body.wpsc-custom-button-blue input[type="submit"]:hover{
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff) );
+	background:-moz-linear-gradient( center top, #378de5 5%, #79bbff 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff');
+	background-color:#378de5;
+}
+body.wpsc-custom-button-blue #content .product_grid_display .wpsc_buy_button:active,
+body.wpsc-custom-button-blue input[type="submit"]:active,  
+.wpsc-custom-button-blue .wpsc_buy_button:active {
+	position:relative;
+	top:1px;
+}
+/**
+ * 	Yellow
+ */
+body.wpsc-custom-button-yellow input[type="submit"],  
+.wpsc-custom-button-yellow .wpsc_buy_button,
+.wpsc-custom-button-yellow .wpsc-button-primary{
+	-moz-box-shadow:inset 0px 1px 0px 0px #fff6af;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #fff6af;
+	box-shadow:inset 0px 1px 0px 0px #fff6af;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffec64), color-stop(1, #ffab23) );
+	background:-moz-linear-gradient( center top, #ffec64 5%, #ffab23 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec64', endColorstr='#ffab23');
+	background-color:#ffec64;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #ffaa22;
+	display:inline-block;
+	color:#333333;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ffee66;
+}
+body.wpsc-custom-button-yellow input[type="submit"]:hover,
+.wpsc-custom-button-yellow .wpsc-button-primary:hover,
+.wpsc-custom-button-yellow .wpsc_buy_button:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffab23), color-stop(1, #ffec64) );
+	background:-moz-linear-gradient( center top, #ffab23 5%, #ffec64 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffab23', endColorstr='#ffec64');
+	background-color:#ffab23;
+}
+body.wpsc-custom-button-yellow input[type="submit"]:active,
+.wpsc-custom-button-yellow .wpsc-button-primary:active,
+.wpsc-custom-button-yellow .wpsc_buy_button:active {
+	position:relative; 
+	top:1px;
+}
+/**
+ * 	Red
+ */
+body.wpsc-custom-button-red input[type="submit"],  
+.wpsc-custom-button-red .wpsc-button-primary, 
+.wpsc-custom-button-red .wpsc_buy_button  {
+	-moz-box-shadow:inset 0px 1px 0px 0px #f29c93;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #f29c93;
+	box-shadow:inset 0px 1px 0px 0px #f29c93;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
+	background:-moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100');
+	background-color:#fe1a00;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #d83526;
+	display:inline-block;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #b23e35;
+}
+body.wpsc-custom-button-red input[type="submit"]:hover,  
+.wpsc-custom-button-red .wpsc-button-primary:hover,
+.wpsc-custom-button-red .wpsc_buy_button:hover  {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ce0100), color-stop(1, #fe1a00) );
+	background:-moz-linear-gradient( center top, #ce0100 5%, #fe1a00 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ce0100', endColorstr='#fe1a00');
+	background-color:#ce0100;
+}
+body.wpsc-custom-button-red input[type="submit"]:active,  
+.wpsc-custom-button-red .wpsc-button-primary:active,
+.wpsc-custom-button-red .wpsc_buy_button:active {
+	position:relative;
+	top:1px;
+}
+/**
+ * 	Matt Buttons
+ */
+body.matt-button input[type="submit"],  
+.matt-button .wpsc-button-primary,
+.matt-button .wpsc_buy_button  {
+background: transparent;
+display: inline-block;
+padding: 5px 15px 6px;
+color: white !important;
+font-size: 13px;
+font-weight: bold;
+line-height: 1;
+text-decoration: none;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+border-color:rgba(0, 0, 0, 0.25);
+position: relative;
+cursor: pointer;
+overflow: visible;
+width: auto;
+}
+body.matt-button input[type="submit"]:hover,  
+.matt-button .wpsc-button-primary:hover,
+.matt-button .wpsc_buy_button:hover  {
+}
+body.matt-button input[type="submit"]:active,  
+.matt-button .wpsc-button-primary:active,
+.matt-button .wpsc_buy_button:active {
+}
+/**
+ * 	Matt Green
+ */
+body.wpsc-custom-button-matt-green input[type="submit"],  
+.wpsc-custom-button-matt-green .wpsc-button-primary,
+.wpsc-custom-button-matt-green .wpsc_buy_button  {
+background-color: #91BD09;
+}
+body.wpsc-custom-button-matt-green input[type="submit"]:hover,  
+.wpsc-custom-button-matt-green .wpsc-button-primary:hover,
+.wpsc-custom-button-matt-green .wpsc_buy_button:hover  {
+	background-color: #749A02;
+}
+body.wpsc-custom-button-matt-green input[type="submit"]:active,  
+.wpsc-custom-button-matt-green .wpsc-button-primary:active,
+.wpsc-custom-button-matt-green .wpsc_buy_button:active {
+	background-color: #749A02;
+}
+/**
+ * 	Matt Orange
+ */
+body.wpsc-custom-button-matt-orange input[type="submit"],  
+.wpsc-custom-button-matt-orange .wpsc-button-primary,
+.wpsc-custom-button-matt-orange .wpsc_buy_button  {
+	background-color: #FF5C00;
+}
+body.wpsc-custom-button-matt-orange input[type="submit"]:hover,  
+.wpsc-custom-button-matt-orange .wpsc_buy_button:hover,
+.wpsc-custom-button-matt-orange .wpsc-button-primary:hover  {
+	background-color: #D45500;
+}
+body.wpsc-custom-button-matt-orange input[type="submit"]:active,  
+.wpsc-custom-button-matt-orange .wpsc-button-primary:active,
+.wpsc-custom-button-matt-orange .wpsc_buy_button:active {
+	background-color: #D45500;
+}
