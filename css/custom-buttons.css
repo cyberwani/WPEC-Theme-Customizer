@@ -10,9 +10,9 @@
 /**
  * 	Blue
  */
-body.wpsc-custom-button-blue .wpsc_buy_button,  
-body.wpsc-custom-button-blue .wpsc-button-primary,
-body.wpsc-custom-button-blue input[type="submit"]{
+body.wpec_toapi_button_style-blue .wpsc_buy_button,  
+body.wpec_toapi_button_style-blue .wpsc-button-primary,
+body.wpec_toapi_button_style-blue input[type="submit"]{
 	-moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
 	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
@@ -33,26 +33,26 @@ body.wpsc-custom-button-blue input[type="submit"]{
 	text-decoration:none;
 	text-shadow:1px 1px 0px #528ecc;
 }
-body.wpsc-custom-button-blue .wpsc_buy_button:hover,
-body.wpsc-custom-button-blue .wpsc-button-primary:hover,
-body.wpsc-custom-button-blue input[type="submit"]:hover{
+body.wpec_toapi_button_style-blue .wpsc_buy_button:hover,
+body.wpec_toapi_button_style-blue .wpsc-button-primary:hover,
+body.wpec_toapi_button_style-blue input[type="submit"]:hover{
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff) );
 	background:-moz-linear-gradient( center top, #378de5 5%, #79bbff 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff');
 	background-color:#378de5;
 }
-body.wpsc-custom-button-blue #content .product_grid_display .wpsc_buy_button:active,
-body.wpsc-custom-button-blue input[type="submit"]:active,  
-.wpsc-custom-button-blue .wpsc_buy_button:active {
+body.wpec_toapi_button_style-blue #content .product_grid_display .wpsc_buy_button:active,
+body.wpec_toapi_button_style-blue input[type="submit"]:active,  
+.wpec_toapi_button_style-blue .wpsc_buy_button:active {
 	position:relative;
 	top:1px;
 }
 /**
  * 	Yellow
  */
-body.wpsc-custom-button-yellow input[type="submit"],  
-.wpsc-custom-button-yellow .wpsc_buy_button,
-.wpsc-custom-button-yellow .wpsc-button-primary{
+body.wpec_toapi_button_style-yellow input[type="submit"],  
+.wpec_toapi_button_style-yellow .wpsc_buy_button,
+.wpec_toapi_button_style-yellow .wpsc-button-primary{
 	-moz-box-shadow:inset 0px 1px 0px 0px #fff6af;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #fff6af;
 	box-shadow:inset 0px 1px 0px 0px #fff6af;
@@ -73,26 +73,26 @@ body.wpsc-custom-button-yellow input[type="submit"],
 	text-decoration:none;
 	text-shadow:1px 1px 0px #ffee66;
 }
-body.wpsc-custom-button-yellow input[type="submit"]:hover,
-.wpsc-custom-button-yellow .wpsc-button-primary:hover,
-.wpsc-custom-button-yellow .wpsc_buy_button:hover {
+body.wpec_toapi_button_style-yellow input[type="submit"]:hover,
+.wpec_toapi_button_style-yellow .wpsc-button-primary:hover,
+.wpec_toapi_button_style-yellow .wpsc_buy_button:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffab23), color-stop(1, #ffec64) );
 	background:-moz-linear-gradient( center top, #ffab23 5%, #ffec64 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffab23', endColorstr='#ffec64');
 	background-color:#ffab23;
 }
-body.wpsc-custom-button-yellow input[type="submit"]:active,
-.wpsc-custom-button-yellow .wpsc-button-primary:active,
-.wpsc-custom-button-yellow .wpsc_buy_button:active {
+body.wpec_toapi_button_style-yellow input[type="submit"]:active,
+.wpec_toapi_button_style-yellow .wpsc-button-primary:active,
+.wpec_toapi_button_style-yellow .wpsc_buy_button:active {
 	position:relative; 
 	top:1px;
 }
 /**
  * 	Red
  */
-body.wpsc-custom-button-red input[type="submit"],  
-.wpsc-custom-button-red .wpsc-button-primary, 
-.wpsc-custom-button-red .wpsc_buy_button  {
+body.wpec_toapi_button_style-red input[type="submit"],  
+.wpec_toapi_button_style-red .wpsc-button-primary, 
+.wpec_toapi_button_style-red .wpsc_buy_button  {
 	-moz-box-shadow:inset 0px 1px 0px 0px #f29c93;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #f29c93;
 	box-shadow:inset 0px 1px 0px 0px #f29c93;
@@ -113,17 +113,17 @@ body.wpsc-custom-button-red input[type="submit"],
 	text-decoration:none;
 	text-shadow:1px 1px 0px #b23e35;
 }
-body.wpsc-custom-button-red input[type="submit"]:hover,  
-.wpsc-custom-button-red .wpsc-button-primary:hover,
-.wpsc-custom-button-red .wpsc_buy_button:hover  {
+body.wpec_toapi_button_style-red input[type="submit"]:hover,  
+.wpec_toapi_button_style-red .wpsc-button-primary:hover,
+.wpec_toapi_button_style-red .wpsc_buy_button:hover  {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ce0100), color-stop(1, #fe1a00) );
 	background:-moz-linear-gradient( center top, #ce0100 5%, #fe1a00 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ce0100', endColorstr='#fe1a00');
 	background-color:#ce0100;
 }
-body.wpsc-custom-button-red input[type="submit"]:active,  
-.wpsc-custom-button-red .wpsc-button-primary:active,
-.wpsc-custom-button-red .wpsc_buy_button:active {
+body.wpec_toapi_button_style-red input[type="submit"]:active,  
+.wpec_toapi_button_style-red .wpsc-button-primary:active,
+.wpec_toapi_button_style-red .wpsc_buy_button:active {
 	position:relative;
 	top:1px;
 }
@@ -164,36 +164,36 @@ body.matt-button input[type="submit"]:active,
 /**
  * 	Matt Green
  */
-body.wpsc-custom-button-matt-green input[type="submit"],  
-.wpsc-custom-button-matt-green .wpsc-button-primary,
-.wpsc-custom-button-matt-green .wpsc_buy_button  {
+body.wpec_toapi_button_style-matt-green input[type="submit"],  
+.wpec_toapi_button_style-matt-green .wpsc-button-primary,
+.wpec_toapi_button_style-matt-green .wpsc_buy_button  {
 background-color: #91BD09;
 }
-body.wpsc-custom-button-matt-green input[type="submit"]:hover,  
-.wpsc-custom-button-matt-green .wpsc-button-primary:hover,
-.wpsc-custom-button-matt-green .wpsc_buy_button:hover  {
+body.wpec_toapi_button_style-matt-green input[type="submit"]:hover,  
+.wpec_toapi_button_style-matt-green .wpsc-button-primary:hover,
+.wpec_toapi_button_style-matt-green .wpsc_buy_button:hover  {
 	background-color: #749A02;
 }
-body.wpsc-custom-button-matt-green input[type="submit"]:active,  
-.wpsc-custom-button-matt-green .wpsc-button-primary:active,
-.wpsc-custom-button-matt-green .wpsc_buy_button:active {
+body.wpec_toapi_button_style-matt-green input[type="submit"]:active,  
+.wpec_toapi_button_style-matt-green .wpsc-button-primary:active,
+.wpec_toapi_button_style-matt-green .wpsc_buy_button:active {
 	background-color: #749A02;
 }
 /**
  * 	Matt Orange
  */
-body.wpsc-custom-button-matt-orange input[type="submit"],  
-.wpsc-custom-button-matt-orange .wpsc-button-primary,
-.wpsc-custom-button-matt-orange .wpsc_buy_button  {
+body.wpec_toapi_button_style-matt-orange input[type="submit"],  
+.wpec_toapi_button_style-matt-orange .wpsc-button-primary,
+.wpec_toapi_button_style-matt-orange .wpsc_buy_button  {
 	background-color: #FF5C00;
 }
-body.wpsc-custom-button-matt-orange input[type="submit"]:hover,  
-.wpsc-custom-button-matt-orange .wpsc_buy_button:hover,
-.wpsc-custom-button-matt-orange .wpsc-button-primary:hover  {
+body.wpec_toapi_button_style-matt-orange input[type="submit"]:hover,  
+.wpec_toapi_button_style-matt-orange .wpsc_buy_button:hover,
+.wpec_toapi_button_style-matt-orange .wpsc-button-primary:hover  {
 	background-color: #D45500;
 }
-body.wpsc-custom-button-matt-orange input[type="submit"]:active,  
-.wpsc-custom-button-matt-orange .wpsc-button-primary:active,
-.wpsc-custom-button-matt-orange .wpsc_buy_button:active {
+body.wpec_toapi_button_style-matt-orange input[type="submit"]:active,  
+.wpec_toapi_button_style-matt-orange .wpsc-button-primary:active,
+.wpec_toapi_button_style-matt-orange .wpsc_buy_button:active {
 	background-color: #D45500;
 }
