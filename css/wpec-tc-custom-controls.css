@@ -2,8 +2,130 @@
  * 	Custom controls css for Gandalf screen
  */
 .wpec-tc-control-wrapper{
-	margin-top:40px;
+	margin-top: 15px;
 	padding: 5px;
-	/*background: #FEFEFE;
-	box-shadow: 0px 2px 3px rgba(0,0,0,0.1);*/
+}
+.wpec-tc-sortable-wrapper{
+	margin-top:25px;
+}
+body .customize-control{
+	width: 100%;
+	padding-bottom: 5px;
+}
+body .customize-control{
+	border-top: 1px solid #ddd;
+}
+body .customize-control:nth-child(1){
+	border:0px;
+}
+.wpec-tc-info-control {
+	padding: 0px;
+	margin: 5px 0px;
+}
+.ui-sortable-placeholder{
+	border:2px dashed #444;
+}
+
+.sortable-item {
+
+	background-color: whiteSmoke;
+	background-image: -ms-linear-gradient(top,#F9F9F9,whiteSmoke);
+	background-image: -moz-linear-gradient(top,#F9F9F9,whiteSmoke);
+	background-image: -o-linear-gradient(top,#F9F9F9,whiteSmoke);
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#F9F9F9),to(whiteSmoke));
+	background-image: -webkit-linear-gradient(top,#F9F9F9,whiteSmoke);
+	background-image: linear-gradient(top,#F9F9F9,whiteSmoke);
+	border-color: #CCC;
+	-moz-box-shadow: inset 0 1px 0 #fff;
+	-webkit-box-shadow: inset 0 1px 0 #fff;
+	box-shadow: inset 0 1px 0 #fff;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.sortable-item-inner{
+	padding: 5px;
+	background-color: #F1F1F1;
+	background-image: -ms-linear-gradient(top,#F9F9F9,#ECECEC);
+	background-image: -moz-linear-gradient(top,#F9F9F9,#ECECEC);
+	background-image: -o-linear-gradient(top,#F9F9F9,#ECECEC);
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#F9F9F9),to(#ECECEC));
+	background-image: -webkit-linear-gradient(top,#F9F9F9,#ECECEC);
+	background-image: linear-gradient(top,#F9F9F9,#ECECEC);
+	margin-bottom: 1px;
+	margin-top: 2px;
+	font-size: 12px;
+	font-weight: bold;
+	overflow: hidden;
+	
+	border-bottom-color: #DFDFDF;
+	text-shadow: white 0 1px 0;
+	-moz-box-shadow: 0 1px 0 #fff;
+	-webkit-box-shadow: 0 1px 0 #fff;
+	box-shadow: 0 1px 0 #fff;
+	padding: 5px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.sortable-icon, .sortable-name{
+	display:inline-block;
+	vertical-align:middle;
+}
+
+.ui-sortable-helper{
+-moz-box-shadow:  inset 0 1px 0 #fff, 0px 0px 4px 1px rgba(86,180,239,0.8);
+-webkit-box-shadow: inset 0 1px 0 #fff, 0px 0px 4px 1px rgba(86,180,239,0.8);
+	box-shadow: inset 0 1px 0 #fff, 0px 0px 4px 1px rgba(86,180,239,0.8);;
+}
+#wpec-tc-loading-bar{
+	position: absolute;
+	top: 9px;
+	left: 250px;
+	width: 30px;
+	height: 30px;
+	background: transparent url('../images/ajax-loader.gif') no-repeat center center;
+	z-index: 999;
+}
+.code-mirror-credits {
+font-size: 10px;
+margin-right:4px;
+}
+.code-mirror-controls{
+	margin-top:1px;
+}
+.code-mirror-controls .button{
+	float: right;
+}
+.CodeMirror {
+background: white;
+border: 1px solid #ddd;
+}   
+.CodeMirror-scroll::-webkit-scrollbar {
+	width: 12px;
+	background: #272727;
+}
+.CodeMirror-scroll::-webkit-scrollbar-track {
+	border-radius: 0px;
+	background: #EEE;
+	border-left: 1px solid #CCC;
+}
+.CodeMirror-scroll::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	border: 1px solid black;
+	box-shadow: inset 1px 0px 3px rgba(255,255,255,0.3), 0px 2px 0px rgba(0,0,0,0.2);
+	background-image: linear-gradient(left , rgb(74,74,74) 0%, rgb(64,64,64) 100%);
+	background-image: -o-linear-gradient(left , rgb(74,74,74) 0%, rgb(64,64,64) 100%);
+	background-image: -moz-linear-gradient(left , rgb(74,74,74) 0%, rgb(64,64,64) 100%);
+	background-image: -webkit-linear-gradient(left , rgb(74,74,74) 0%, rgb(64,64,64) 100%);
+	background-image: -ms-linear-gradient(left , rgb(74,74,74) 0%, rgb(64,64,64) 100%);
+	background-image: -webkit-gradient(
+	linear,
+	left top,
+	right top,
+	color-stop(0, rgb(74,74,74)),
+	color-stop(1, rgb(64,64,64))
+	);
 }

@@ -6,6 +6,18 @@
 		$color_visited = get_option("_d_link_color_visited");
 		$header_font = get_option('_d_impact_font');
 		$body_font = get_option('_d_body_font');
+
+class WPEC_Theme_Customizer_Style_Generator{
+	
+	public function __construct(){
+		
+	}
+	
+	public function add_style($option, $selectors, $css){
+	}
+	
+}
+
 ?>
 <!-- WPEC THEME CUSTOMIZER STYLES --> 
 <style type='text/css'>
@@ -14,6 +26,13 @@
  *  within the WPEC Theme Customzier Plugin directory. Modify them to reroute
  *  Theme Customizer options or alter their affect.
  ----------------------------------------------------------------------------*/
+		<?php     
+		
+		
+				echo 'css option = '.get_option('wpec_tc_css_coder_value');	 
+				echo str_replace('<LINEBREAK>', PHP_EOL, get_option('wpec_tc_css_coder_value'));
+		?>
+
 		<?php if ($color != '' && $color != null):?>
 			body table.list_productdisplay h2.prodtitle a:link, 
 			body #content table.list_productdisplay h2.prodtitle a:link, 
@@ -35,8 +54,13 @@
 				color: #<?php echo $color;?>; 
 			}
 		<?php endif;?>
-		//and finally get fonts
-		<?php
+		
+		<?php if(get_option('wpec_toapi_wpsc_grid_view_item_width')):?>
+			#wpec-product-grid .wpsc-product{
+				width: <?php echo get_option('wpec_toapi_wpsc_grid_view_item_width');?>px;
+			}
+		<?php endif;?>
+		<?php		//and finally get fonts
 		if ($body_font != '' && $body_font != null) {
 			//echo elements with body before to override style.css
 			$elem_str = "input[type='text'],select,textarea, html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td ";

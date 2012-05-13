@@ -1,8 +1,8 @@
 /**
  * 	Styles related to WPEC Theme Customizer
  */
-.ab-gandaf{
-	background:url('../images/brush.png') no-repeat left center;
+.ab-gandaf {
+	background: url('../images/brush.png') no-repeat left center;
 }
 #wpec-product-grid .wpsc-product {
 	display: inline-block;
@@ -35,6 +35,6 @@
 	text-align: center;
 }
 .wpsc-breadcrumb-item {
-display: inline-block;
-list-style: none;
+	display: inline-block;
+	list-style: none;
 }
