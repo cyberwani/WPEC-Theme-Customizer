@@ -6,6 +6,9 @@
 		$color_visited = get_option("_d_link_color_visited");
 		$header_font = get_option('_d_impact_font');
 		$body_font = get_option('_d_body_font');
+		//body and header colors
+		$body_text_color = get_option('_d_body_text_color');
+		$header_text_color = get_option('_d_header_text_color');
 
 class WPEC_Theme_Customizer_Style_Generator{
 	
@@ -29,8 +32,11 @@ class WPEC_Theme_Customizer_Style_Generator{
 		<?php     
 		
 		
-				echo 'css option = '.get_option('wpec_tc_css_coder_value');	 
-				echo str_replace('<LINEBREAK>', PHP_EOL, get_option('wpec_tc_css_coder_value'));
+				$code_mirror = split('<LINEBREAK>', get_option('wpec_tc_css_coder_value'));
+				foreach($code_mirror as $code)
+				{
+					echo "$code".PHP_EOL;
+				}
 		?>
 
 		<?php if ($color != '' && $color != null):?>
@@ -52,6 +58,16 @@ class WPEC_Theme_Customizer_Style_Generator{
 			body #content table.list_productdisplay h2.prodtitle a:visited,
 			body a:visited{
 				color: #<?php echo $color;?>; 
+			}
+		<?php endif;?>
+		<?php if ($body_text_color != '' && $body_text_color != null):?>
+			body {
+				color: #<?php echo $body_text_color;?>; 
+			}
+		<?php endif;?>
+		<?php if ($header_text_color != '' && $header_text_color != null):?>
+			body h1,body h2,body h3,body h4,body h5,body h6,body h7,body h8 {
+				color: #<?php echo $header_text_color;?>; 
 			}
 		<?php endif;?>
 		

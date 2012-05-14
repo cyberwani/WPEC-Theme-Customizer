@@ -12,12 +12,13 @@ body .customize-control{
 	width: 100%;
 	padding-bottom: 5px;
 }
+/*
 body .customize-control{
 	border-top: 1px solid #ddd;
 }
 body .customize-control:nth-child(1){
 	border:0px;
-}
+}*/
 .wpec-tc-info-control {
 	padding: 0px;
 	margin: 5px 0px;
@@ -89,15 +90,28 @@ body .customize-control:nth-child(1){
 	background: transparent url('../images/ajax-loader.gif') no-repeat center center;
 	z-index: 999;
 }
+#wpec-tc-code-mirror-div {
+        position: relative;
+        width: 250px;
+        height: 200px;
+}
 .code-mirror-credits {
 font-size: 10px;
-margin-right:4px;
+margin-right:4px;  
 }
 .code-mirror-controls{
 	margin-top:1px;
 }
 .code-mirror-controls .button{
 	float: right;
+}
+#wpec-tc-code-mirror-wrapper{
+	display:block;
+}
+.CodeMirror-scroll{
+width: 100%;
+display:block;
+position:relative;
 }
 .CodeMirror {
 background: white;

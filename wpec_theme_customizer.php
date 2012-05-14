@@ -7,12 +7,36 @@ Author: Instinct - Jack Mahoney
 Author URI: http://www.jackmahoney.co.nz
 License: A "Slug" license name e.g. GPL2
 
- 
+====== About ======
 Contains all the settings for the Theme Customzier (Gandalf)
+
+====== Usage ======
+Plugin is object orientated. A new instance of WPEC_Theme_Customizer
+calls its contructor. This adds actions and filters.
+
+Most important action is 'customize_register' which calls 'populate_gandalf'
+
+Fucntion populate_gandalf creates an instance of Radagast_The_Brown in the 
+customize register hook that constructs itself with a pointer to the WP Core Gandalf
+instance.
+
+Radagst contains wrapper functions for adding sections and controls. Controls
+require an option - this does not need to exist already as it will be checked
+and created if null. Changes to controls in the front end update the passed 
+option via ajax.
+ 
+A filter for body classes adds every option that has wpec_toapi_ prefix in
+its name plus its value to the body as a class. This allows for top down
+css targeting.
+
+Function header_output includes the WPEC_Theme_Customizer_Css.php file inside
+the theme's <head></head>. Here you can use php conditionals for options to 
+inject css.
+ 
 -------------------------------------------------------------*/
  
 //TODO change this to plugin directory
-define('DIRECTORY', plugins_url().'/wpec-theme-customizer-plugin');
+define('WPEC_TC_DIRECTORY', plugins_url().'/wpec-theme-customizer-plugin');
 
 $wpec_theme_customizer = new WPEC_Theme_Customizer();
 
@@ -173,7 +197,7 @@ class WPEC_Theme_Customizer {
 	 */
 	public function admin_styles(){
         echo '<!-- styles for wpec_theme_customizer backend -->
-              <link rel="stylesheet" type="text/css" href="'.DIRECTORY.'/css/admin-styles.css'. '">';
+              <link rel="stylesheet" type="text/css" href="'.WPEC_TC_DIRECTORY.'/css/admin-styles.css'. '">';
 	} 
 	/**
 	 * create 'Customize' button in wp admin bar
@@ -189,19 +213,18 @@ class WPEC_Theme_Customizer {
 	 */
 	public function enqueue_scripts() {
 		//css
-		wp_enqueue_style('wpsc-custom-buttons', DIRECTORY . '/css/custom-buttons.css');
-		wp_enqueue_style('wpsc-gandalf-styles', DIRECTORY . '/css/gandalf-styles.css');
+		wp_enqueue_style('wpsc-custom-buttons', WPEC_TC_DIRECTORY . '/css/custom-buttons.css');
+		wp_enqueue_style('wpsc-gandalf-styles', WPEC_TC_DIRECTORY . '/css/gandalf-styles.css');
 		//js  
-		wp_enqueue_script('masonry', DIRECTORY.'/js/jquery.masonry.min.js', array('jquery'));
-		wp_enqueue_script('imagesLoaded', DIRECTORY.'/js/jquery.imagesloaded.min.js', array('masonry'));
-		wp_enqueue_script('wpec-masonry', DIRECTORY . '/js/wpec-masonry.js', array('masonry','imagesLoaded'));
+		wp_enqueue_script('masonry', WPEC_TC_DIRECTORY.'/js/jquery.masonry.min.js', array('jquery'));
+		wp_enqueue_script('imagesLoaded', WPEC_TC_DIRECTORY.'/js/jquery.imagesloaded.min.js', array('masonry'));
+		wp_enqueue_script('wpec-masonry', WPEC_TC_DIRECTORY . '/js/wpec-masonry.js', array('masonry','imagesLoaded'));
 	} 
 	/**
 	 * add a body class for every option with a 'wpec_toapi_' prefix 
 	 * and append its current value
 	 */
 	public function add_body_classes($classes) {
-
 		$all_options = get_alloptions();
 		$options = array_keys($all_options);
 		foreach($options as $option)
@@ -286,25 +309,22 @@ class WPEC_Theme_Customizer {
 	 */
 	public function populate_gandalf($gandalf) {
 		$radagast = new Radagast_The_Brown($gandalf);
-		//--------------------theme section--------------------//	
-		$gandalf -> add_section('wpec_theme_section', array('title' => __('Themes'), 'priority' => -1));
-		$radagast -> add_css_coder('wpec_theme_section');
 		//--------------------wpec help --------------------//		
 		$gandalf -> add_section('wpec_help_page', array('title' => __('WPEC Help'), 'priority' => 0));
 		//TODO add an info panel
-		$radagast->add_info('<p><img style="float:left;margin:0px 5px 5px 0px;" src="http://jackmahoney.co.nz/_dollars/wp-content/uploads/getshopped4.png"/>
+		$radagast->add_info('<p><img style="float:left;margin:0px 10px 5px 0px;" src="http://jackmahoney.co.nz/_dollars/wp-content/uploads/getshopped4.png"/>
 		Welcome to the WPEC Theme Customizer. Some options will taking longer to update than others. Make sure you save changes when you
 		are finished. See <a href="#" target="blank">getshopped.org/wpec-theme-customizer</a> for more information.','wpec_help_page');
+		//--------------------theme section--------------------//	
+		$gandalf -> add_section('wpec_theme_section', array('title' => __('Theme Settings'), 'priority' => 0));
+	    $radagast -> add_css_coder('wpec_theme_section');
+		$radagast-> add_sortable_sidebar_control('wpec_toapi_wpsc_sortable_widget_order', 'Sortable Widgets', 'wpec_theme_section');
+		
 		//--------------------wpec products --------------------//
 		$gandalf -> add_section('wpec_product_settings', array('title' => __('WPEC Product Settings'), 'priority' => 1));
 
 		$radagast -> add_checkbox('wpec_toapi_product_ratings', 'Product Ratings', 'wpec_product_settings');
-		$radagast -> add_checkbox('wpec_toapi_list_view_quantity', 'Show Stock Availability', 'wpec_product_settings');
-		$radagast -> add_checkbox('wpec_toapi_fancy_notifications', 'Display Fancy Purchase Notifications', 'wpec_product_settings');
-		$radagast -> add_checkbox('wpec_toapi_per_item_shipping', 'Display per item shipping', 'wpec_product_settings');
 		$radagast -> add_checkbox('wpec_toapi_link_in_title', 'Link in Title', 'wpec_product_settings');
-		$radagast -> add_checkbox('wpec_toapi_multi_add', 'Add quantity field to each product description', 'wpec_product_settings');
-		$radagast -> add_checkbox('wpec_toapi_wpsc_enable_comments', 'Use IntenseDebate Comments', 'wpec_product_settings');
 		//button styles
 		$radagast -> add_select('wpec_toapi_button_style', 'Button Styles', 'wpec_product_settings', array('none' => __('None'), 'silver' => __('Silver'), 'blue' => __('Blue'), 'matt-green matt-button' => __('Matt Green'), 'matt-orange matt-button' => __('Matt Orange'), 'yellow' => __('Yellow'), 'red' => __('Red'), ));
 		//--------------------wpec products page--------------------//
@@ -315,7 +335,7 @@ class WPEC_Theme_Customizer {
 		//grid item width slider
 		$radagast-> add_slider_control('wpec_toapi_wpsc_grid_view_item_width', 'Grid View Item Width', 'wpec_product_page', array('min'=>200,'max'=>500));
 		//add sortable widget control
-		$radagast-> add_sortable_sidebar_control('wpec_toapi_wpsc_sortable_widget_order', 'Sortable Widgets', 'wpec_product_page');
+		
 		
 		//grid description 	
 		$radagast -> add_checkbox('wpec_toapi_wpsc_products_page_description', 'Description', 'wpec_product_page');
@@ -326,8 +346,6 @@ class WPEC_Theme_Customizer {
 		//Sort Product By
 		$radagast -> add_select('wpsc_sort_by', 'Sort Product By', 'wpec_product_page', array('name' => __('Name'), 'price' => __('Price'), 'dragndrop' => __('Drag n Drop'), 'id' => __('Id')));
 		
-		$radagast -> add_checkbox('show_advanced_search', 'Show Advanced Search', 'wpec_product_page');
-		$radagast -> add_checkbox('wpsc_replace_page_title', 'Replace Page Title With Product/Category Name', 'wpec_product_page');
 		//--------------------wpec thumbnails--------------------//
 		$gandalf -> add_section('wpec_thumbnails', array('title' => __('WPEC Thumbnails'), 'priority' => 2));
 
@@ -374,6 +392,10 @@ class WPEC_Theme_Customizer {
 		$radagast -> add_select('_d_impact_font', 'Header Font', 'text', $font_choices);
 		//add body font
 		$radagast -> add_select('_d_body_font', 'Body Font', 'text', $font_choices);
+		//body color
+		$radagast -> add_color_control('_d_header_text_color', 'Header Text Color', 'text');
+		$radagast -> add_color_control('_d_body_text_color', 'Body Text Color', 'text');
+
 
 	}
 
@@ -504,11 +526,11 @@ class Radagast_The_Brown{
 	 */
 	public function add_sortable_sidebar_control($option, $title, $section){
 		$this -> add_setting($option);
-		$this -> gandalf -> add_control(new WPEC_Theme_Customizer_Sortable_Control($this -> gandalf, 
+		$this -> gandalf -> add_control(new WPEC_Theme_Customizer_Sortable_Sidebar_Control($this -> gandalf, 
 		$option, 
 		array('settings' => $option, 'label' => __($title), 'section' => $section)));
 	}  
-	
+	  
 	/**
 	 * add theme switcher
 	 */
@@ -536,7 +558,7 @@ class Radagast_The_Brown{
 		}     
 		$option = 'wpec_tc_css_coder_value';
 		$this -> add_setting($option);
-		$this -> gandalf -> add_control(new WPEC_Theme_Customizer_CSS_Coder_Control($this -> gandalf, 
+		$this -> gandalf -> add_control(new WPEC_Theme_Customizer_Code_Mirror($this -> gandalf, 
 		$option, 
 		array('settings' => $option, 'label' => __($title), 'section' => $section)));
 	}

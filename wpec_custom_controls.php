@@ -1,10 +1,10 @@
 <?php
 class WPEC_Theme_Customizer_Base_Control extends WP_Customize_Control{
 	public function enqueue() {
-		wp_enqueue_script('wpec-tc-utils', DIRECTORY . '/js/wpec-theme-customizer-utils.js', array('jquery','jquery-ui'));
-		wp_enqueue_script('jquery-ui', DIRECTORY . '/js/jquery-ui-1.8.20.custom.min.js', array('jquery'));
-		wp_enqueue_style('jquery-ui-aristo', DIRECTORY . '/css/aristo/aristo.css');
-		wp_enqueue_style('wpec-tc-custom-controls', DIRECTORY . '/css/wpec-tc-custom-controls.css');
+		wp_enqueue_script('wpec-tc-utils', WPEC_TC_DIRECTORY . '/js/wpec-theme-customizer-utils.js', array('jquery','jquery-ui'));
+		wp_enqueue_script('jquery-ui', WPEC_TC_DIRECTORY . '/js/jquery-ui-1.8.20.custom.min.js', array('jquery'));
+		wp_enqueue_style('jquery-ui-aristo', WPEC_TC_DIRECTORY . '/css/aristo/aristo.css');
+		wp_enqueue_style('wpec-tc-custom-controls', WPEC_TC_DIRECTORY . '/css/wpec-tc-custom-controls.css');
 		
 	}
 }
@@ -67,12 +67,6 @@ class WPEC_Theme_Customizer_Slider_Control extends WPEC_Theme_Customizer_Base_Co
 			slider.slider( 'value' , display.val() );
 		});
 		
-		//show updates live without refresh
-		wp.customize('<?php echo esc_attr( $this->value() ); ?>',function( value ) {
-        value.bind(function(to) {
-            alert('slider moved!');
-	        });
-	    });
 		
 		</script>
 		<?php
@@ -101,7 +95,7 @@ class WPEC_Theme_Customizer_Info_Control extends WPEC_Theme_Customizer_Base_Cont
 /**
  * Theme Switcher
  */	
-class WPEC_Theme_Customizer_CSS_Coder_Control extends WPEC_Theme_Customizer_Base_Control{
+class WPEC_Theme_Customizer_Code_Mirror extends WPEC_Theme_Customizer_Base_Control{
 	
 	public function __construct( $manager, $id, $args) {
 		parent::__construct( $manager, $id, $args );
@@ -110,39 +104,51 @@ class WPEC_Theme_Customizer_CSS_Coder_Control extends WPEC_Theme_Customizer_Base
 	public function enqueue(){
 		parent::enqueue();
 		//code mirror files
-		wp_enqueue_script('code-mirror-library', DIRECTORY . '/libraries/CodeMirror-2.24/lib/codemirror.js');
-		wp_enqueue_script('code-mirror-mode-css', DIRECTORY . '/libraries/CodeMirror-2.24/mode/css/css.js');
-		wp_enqueue_script('code-mirror-fold-code', DIRECTORY . '/libraries/CodeMirror-2.24/lib/util/foldcode.js');
-		wp_enqueue_script('code-mirror-simple-hint', DIRECTORY . '/libraries/CodeMirror-2.24/lib/util/simple-hint.js');
-		wp_enqueue_style('code-mirror-simple-hint-css', DIRECTORY . '/libraries/CodeMirror-2.24/lib/util/simple-hint.css');
-		wp_enqueue_style('code-mirror-css', DIRECTORY . '/libraries/CodeMirror-2.24/lib/codemirror.css'); 
+		wp_enqueue_script('code-mirror-library', WPEC_TC_DIRECTORY . '/libraries/CodeMirror-2.24/lib/codemirror.js');
+		wp_enqueue_script('code-mirror-mode-css', WPEC_TC_DIRECTORY . '/libraries/CodeMirror-2.24/mode/css/css.js');
+		wp_enqueue_style('code-mirror-css', WPEC_TC_DIRECTORY . '/libraries/CodeMirror-2.24/lib/codemirror.css'); 
 	}
 	
 	public function render_content() {
 		?>
-			<div class='wpec-tc-control-wrapper wpec-tc-code-mirror'>
-				<textarea id='wpec-tc-code-mirror'></textarea> 
+		<div class="customize-control-title">CSS Editor</div>
+			<div id='wpec-tc-code-mirror-wrapper' class='wpec-tc-control-wrapper wpec-tc-code-mirror'>
+				
+				<textarea id='wpec-tc-code-mirror' name='wpec-tc-code-mirror'><?php 
+					$code_mirror = split('<LINEBREAK>', $this->value());
+					foreach($code_mirror as $code)
+					{
+						echo "$code".PHP_EOL;  
+					}  
+					?></textarea>
+				
 				<div class='code-mirror-controls'>
 					
 					<span class='code-mirror-credits'>Powered By CodeMirror</span>
 					<a id='code-mirror-refresh' class='button'>Refresh</a>
 				 </div> 
-					<input id='wpec-tc-code-mirror-hidden-value' <?php $this->link(); ?>/>
-			</div>
+					<input hidden='hidden' value="<?php echo esc_attr( $this->value() ); ?>" id='wpec-tc-code-mirror-hidden-value' <?php $this->link(); ?>/>
+			</div>    
 			     
 		<script type='text/javascript'>
-		var textarea = document.getElementById('wpec-tc-code-mirror');
-		var myCodeMirror = CodeMirror.fromTextArea(textarea, {onUpdate:codemirrorcallback});
-		function codemirrorcallback(){
-			myCodeMirror.save();
-			jQuery('#wpec-tc-code-mirror-hidden-value').val(textarea.value.replace(/\n\r?/g, '<LINEBREAK>'));
-		}
-		jQuery('#code-mirror-refresh').click(
-		function(){
-			var display = jQuery('#wpec-tc-code-mirror-hidden-value');
+		jQuery(document).ready(function(){
 			var e = jQuery.Event("keyup");
 			e.which = 50; // Some key code value
-			display.trigger(e); //trigger typing event to prompt ajax
+			var textarea = document.getElementById('wpec-tc-code-mirror');
+			var myCodeMirror = CodeMirror.fromTextArea(textarea,    
+				{  
+				onUpdate: codemirrorcallback,
+				
+				});
+			function codemirrorcallback(){
+				myCodeMirror.save();
+				jQuery('#wpec-tc-code-mirror-hidden-value').val(textarea.value.replace(/\n\r?/g, '<LINEBREAK>'));
+			}
+			jQuery('#code-mirror-refresh').click(
+			function(){
+				var display = jQuery('#wpec-tc-code-mirror-hidden-value');
+				display.trigger(e); //trigger typing event to prompt ajax
+			});
 		});
 		</script>
 	
@@ -164,7 +170,6 @@ class WPEC_Theme_Customizer_Theme_Switcher_Control extends WPEC_Theme_Customizer
 			<div class='wpec-tc-control-wrapper wpec-tc-theme-control'>
 				<?php
 				$themes = get_themes();
-				//var_dump($themes);  
 				echo '<form>';
 				foreach($themes as $theme){
 					$name = $theme->name;
@@ -188,25 +193,12 @@ class WPEC_Theme_Customizer_Theme_Switcher_Control extends WPEC_Theme_Customizer
 	}
 }
 		
-class WPEC_Theme_Customizer_Sortable_Control extends WPEC_Theme_Customizer_Base_Control {
-	public $type    = '';
-	public $removed = '';
-	public $context;
+class WPEC_Theme_Customizer_Sortable_Sidebar_Control extends WPEC_Theme_Customizer_Base_Control {
 	
 	public function __construct( $manager, $id, $args) {
 		parent::__construct( $manager, $id, $args );
 	}
 	
-	
-	public function to_json() {
-		parent::to_json();
-
-		$this->json['removed'] = $this->removed;
-
-		if ( $this->context )
-			$this->json['context'] = $this->context;
-	}
-
 	public function render_content() {
 		?>
 		<label>
@@ -274,6 +266,45 @@ class WPEC_Theme_Customizer_Sortable_Control extends WPEC_Theme_Customizer_Base_
 			);
 			jQuery( "#sortable" ).disableSelection();
 		});
+		
+		</script>
+		<?php
+	}
+} 		 
+
+class WPEC_Theme_Customizer_Sortable_Control extends WPEC_Theme_Customizer_Base_Control {
+	
+	
+	public function __construct( $manager, $id, $args, $objects) {
+		parent::__construct( $manager, $id, $args );
+	}
+
+	public function render_content() {
+		?>
+		<label>
+			<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
+			<div class='wpec-tc-control-wrapper wpec-tc-sortable-wrapper'>
+					<?php
+					echo "<ul class='sortable-ui-widget'>";//with data attr of sidebar name
+						foreach($sidebar as $object)
+						{
+							$id = $widget; 					
+							echo "<li id='$id' class='ui-state-default sortable-item'>
+									<div class='sortable-item-inner'>
+									<span class='ui-icon ui-icon-arrowthick-2-n-s sortable-icon'></span>
+									<span class='sortable-name'>$name</span>
+									</div>
+								</li>";
+						}
+					echo '</ul>';  
+					
+					  
+				
+				?>
+				<input id='sidebar-widget-order-value' hidden='hidden' value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); ?>/>	
+			</div>
+		</label>
+		<script>
 		
 		</script>
 		<?php
