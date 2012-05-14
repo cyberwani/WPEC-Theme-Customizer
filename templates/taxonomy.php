@@ -22,8 +22,8 @@ global $wp_query;
 	</ul>
 	<?php endif;?>
 	<?php wpsc_product_pagination( 'top' ); ?>
-		<?php if( get_option('wpec_toapi_taxonomy_view') =='grid' ):?>
 			<div id='wpec-product-grid' 
+		<?php if( get_option('wpec_toapi_taxonomy_view') =='grid' ):?>
 			class="<?php if(get_option('wpec_toapi_wpsc_grid_view_masonry')==1) echo 'masonry-container';?>">
 			<?php wpsc_get_template_part( 'loop', 'grid-products' ); ?>
 			</div>

@@ -46,6 +46,7 @@ $wpec_theme_customizer = new WPEC_Theme_Customizer();
  */
 class WPEC_Theme_Customizer {
 	public function __construct() {
+		add_theme_support( 'custom-background' );
 		//enque scripts
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
 		//hook for customizer
@@ -58,7 +59,6 @@ class WPEC_Theme_Customizer {
 		add_action('wp_before_admin_bar_render', array($this, 'admin_bar_menu'));
 		//add settings page
 		add_action('admin_menu', array($this, 'add_settings_page'));
-		update_option('wpec_theme_customizer_nag',false);
 		//show nag if option unset
 		if ( !get_option('wpec_theme_customizer_nag') )
  			add_action( 'admin_notices', array($this, 'activation_nag' ));
@@ -74,14 +74,15 @@ class WPEC_Theme_Customizer {
 	 * alert shown on plugin activation
 	 */
 	public function activation_nag(){
-	$selected_gateways = get_option( 'wpec_theme_customizer_nag' );
 	
+	if (!get_option( 'wpec_theme_customizer_nag' )):
 	?>
 	  <div id="message" class="updated fade">
 	   <p><?php printf(  '<strong>Configure WPEC Theme Customizer</strong><br /> 
-	   The WPEC Theme Customizer requires various template files to be located in your theme directory to function correctly. <a href="%2s">Click here</a> to configure the plugin 
-	   to take advantage of these new features.', admin_url( 'options-general.php?page=wpec_theme_customizer_settings' ), admin_url( 'options-general.php?page=wpec_theme_customizer_settings&wpec_theme_customizer_notices=gc_ignore' ) ) ?></p>
+	   The WPEC Theme Customizer requires various template files to be located in your theme directory to function correctly. <a href="%1s">Click here</a> to configure the plugin 
+	   to take advantage of these new features.', admin_url( 'options-general.php?page=wpec_theme_customizer_settings&wpec_theme_customizer_notices=gc_ignore' ) ) ?></p>
 	  </div> <?php
+	endif;
 	}
 	/**
 	 * remove the alert
@@ -120,19 +121,6 @@ class WPEC_Theme_Customizer {
 		{
 			copy($plugin_templates.$file,$destination.$file);
 		}
-	}
-	
-	public function get_theme_template($template){
-		//listen for theme switch
-		// $chosen_theme_folder = get_option('wpec_tc_theme_switcher_selection'); //folder name / template
-		// $chosen_theme_data = get_theme_data( get_theme_root() . '/' . $theme_folder . '/style.css' );
-		// $current_theme_name = get_current_theme();
-		// $chosen_theme_name = $chosen_theme_data['Name'];
-		// //if stored theme setting doesn't match current theme setting thene change it
-		// if($chosen_theme_folder!=null)
-			// return $chosen_theme_folder;
-		// else   
-			// return $template;  
 	}
 	
 	/**
@@ -216,9 +204,13 @@ class WPEC_Theme_Customizer {
 		wp_enqueue_style('wpsc-custom-buttons', WPEC_TC_DIRECTORY . '/css/custom-buttons.css');
 		wp_enqueue_style('wpsc-gandalf-styles', WPEC_TC_DIRECTORY . '/css/gandalf-styles.css');
 		//js  
-		wp_enqueue_script('masonry', WPEC_TC_DIRECTORY.'/js/jquery.masonry.min.js', array('jquery'));
-		wp_enqueue_script('imagesLoaded', WPEC_TC_DIRECTORY.'/js/jquery.imagesloaded.min.js', array('masonry'));
-		wp_enqueue_script('wpec-masonry', WPEC_TC_DIRECTORY . '/js/wpec-masonry.js', array('masonry','imagesLoaded'));
+		if(get_option('wpec_toapi_wpsc_grid_view_masonry') == 1)
+		{
+			//masonry scripts if preference enabled
+			wp_enqueue_script('masonry', WPEC_TC_DIRECTORY.'/js/jquery.masonry.min.js', array('jquery'));
+			wp_enqueue_script('imagesLoaded', WPEC_TC_DIRECTORY.'/js/jquery.imagesloaded.min.js', array('masonry'));
+			wp_enqueue_script('wpec-masonry', WPEC_TC_DIRECTORY . '/js/wpec-masonry.js', array('masonry','imagesLoaded'));
+		}
 	} 
 	/**
 	 * add a body class for every option with a 'wpec_toapi_' prefix 
@@ -241,21 +233,32 @@ class WPEC_Theme_Customizer {
 	/**
 	 * scan the current theme directory for template files and
 	 * print out those found
+	 * @param $echo bool if false will return a true or false for whether wp-e-commerce folder is present for this theme
 	 */
-	public function scan_theme_dir(){
+	public function scan_theme_dir($echo = true){
 		$theme_dir = get_template_directory().'/';
 		$theme_files = scandir($theme_dir);
 		$wpec_folder_present = in_array('wp-e-commerce', $theme_files); //bool
 		if($wpec_folder_present) //is wp-e-commerce folder present?
 		{
 			$templates = scandir($theme_dir.'wp-e-commerce/');
+			if($echo == true)
+			{
 			foreach($templates as $template)
 				if(strpos($template, '.php')!=false)
 					echo "<div class='file-wrapper'><span class='file-icon'></span> $template</div>";
+			}
+			else 
+			{
+				return true;
+			}
 		}
 		else
 		{
-			echo 'No <code>wp-e-commerce</code> folder found in theme. It will be created upon template migration.';
+			if($echo == true)			
+				echo 'No <code>wp-e-commerce</code> folder found in theme. It will be created upon template migration.';
+			else
+				return false;
 		}
 	}
 	/**
@@ -310,8 +313,8 @@ class WPEC_Theme_Customizer {
 	public function populate_gandalf($gandalf) {
 		$radagast = new Radagast_The_Brown($gandalf);
 		//--------------------wpec help --------------------//		
-		$gandalf -> add_section('wpec_help_page', array('title' => __('WPEC Help'), 'priority' => 0));
-		//TODO add an info panel
+		$gandalf -> add_section('wpec_help_page', array('title' => __('WPEC Help'), 'priority' => 1));
+		$radagast -> add_warning('wpec_help_page');
 		$radagast->add_info('<p><img style="float:left;margin:0px 10px 5px 0px;" src="http://jackmahoney.co.nz/_dollars/wp-content/uploads/getshopped4.png"/>
 		Welcome to the WPEC Theme Customizer. Some options will taking longer to update than others. Make sure you save changes when you
 		are finished. See <a href="#" target="blank">getshopped.org/wpec-theme-customizer</a> for more information.','wpec_help_page');
@@ -333,7 +336,7 @@ class WPEC_Theme_Customizer {
 		//wpsc_category_grid_view
 		$radagast -> add_select('wpec_toapi_taxonomy_view', 'Product Display Format', 'wpec_product_page', array('list' => __('List'), 'grid' => __('Grid')));
 		//grid item width slider
-		$radagast-> add_slider_control('wpec_toapi_wpsc_grid_view_item_width', 'Grid View Item Width', 'wpec_product_page', array('min'=>200,'max'=>500));
+		$radagast-> add_slider_control('wpec_toapi_wpsc_grid_view_item_width', 'Grid View Item Width', 'wpec_product_page', array('min'=>50,'max'=>500));
 		//add sortable widget control
 		
 		
@@ -348,26 +351,32 @@ class WPEC_Theme_Customizer {
 		
 		//--------------------wpec thumbnails--------------------//
 		$gandalf -> add_section('wpec_thumbnails', array('title' => __('WPEC Thumbnails'), 'priority' => 2));
-
+/*
+[12:02:59 p.m.] Gary Cao:  $crop = wpsc_get_option( 'crop_thumbnails' );
+ add_image_size( 'wpsc_product_single_thumbnail', get_option( 'single_view_image_width' ), get_option( 'single_view_image_height' ), $crop );
+ add_image_size( 'wpsc_product_archive_thumbnail', get_option( 'product_image_width' ), get_option( 'product_image_height' ), $crop );
+ add_image_size( 'wpsc_product_taxonomy_thumbnail', get_option( 'category_image_width' ), get_option( 'product_image_height' ), $crop );
+ add_image_size( 'wpsc_product_cart_thumbnail', 64, 64, $crop );*/
+		//crop thumbnails
+		$radagast -> add_checkbox('wpsc_crop_thumbnails', 'Crop Thumbnails', 'wpec_thumbnails');
 		//default image sizes
 		$radagast -> add_textfield('product_image_width', 'Default Product Thumbnail Width', 'wpec_thumbnails');
 		$radagast -> add_textfield('product_image_height', 'Default Product Thumbnail Height', 'wpec_thumbnails');
 		//category image sizes
-		$radagast -> add_textfield('category_image_width', 'Default Product Group Thumbnail Width', 'wpec_thumbnails');
-		$radagast -> add_textfield('category_image_height', 'Default Product Group Thumbnail Height', 'wpec_thumbnails');
+		$radagast -> add_subheader('Taxonomy Thumbnail', 'wpec_thumbnails');  
+		$radagast -> add_textfield('category_image_width', 'Taxonomy Thumbnail Width', 'wpec_thumbnails');
+		$radagast -> add_textfield('category_image_height', 'Taxonomy Thumbnail Height', 'wpec_thumbnails');
 		//single product group image sizes
 		$radagast -> add_textfield('single_view_image_width', 'Single Product Image Width', 'wpec_thumbnails');
 		$radagast -> add_textfield('single_view_image_height', 'Single Product Image Height', 'wpec_thumbnails');
-		//crop thumbnails
-		$radagast -> add_checkbox('wpsc_crop_thumbnails', 'Crop Thumbnails', 'wpec_thumbnails');
-		$radagast -> add_checkbox('show_thumbnails', 'Show Thumbnails', 'wpec_thumbnails');
+		
 		//--------------------wpec category section--------------------//
 		$gandalf -> add_section('wpec_categories', array('title' => __('WPEC Categories'), 'priority' => 3));
 		//category description
 		$radagast -> add_checkbox('wpsc_category_description', 'Show Product Category Description', 'wpec_categories');
 		//category thumbnails
 		$radagast -> add_checkbox('show_category_thumbnails', 'Show Product Category Thumbnails', 'wpec_categories');
-		//category gridview
+		//category gridview
 		$radagast -> add_checkbox('wpsc_category_grid_view', 'Category Grid View', 'wpec_categories');
 		//--------------------header section--------------------//
 		//add logo image
@@ -472,7 +481,7 @@ class Radagast_The_Brown{
 	 */
 	public function add_textfield($option, $title, $section) {
 		$this -> add_setting($option);
-		$this -> gandalf -> add_control($option, array('settings' => $option, 'label' => __($title), 'section' => $section, ));
+		$this -> gandalf -> add_control($option, array('settings' => $option, 'label' => __($title), 'section' => $section));
 	}
 
 	/**
@@ -499,6 +508,33 @@ class Radagast_The_Brown{
 		$this -> gandalf -> add_control(
 		new WPEC_Theme_Customizer_Info_Control($this -> gandalf, 'wpec_tc_hidden_info_place_holder', 
 		array('settings' => 'wpec_tc_hidden_info_place_holder', 'label' => 'wpec_tc_hidden_info_place_holder', 'section' => $section), $body));
+	} 
+	/**
+	 * add warning
+	 */
+	public function add_warning($section){
+		$theme_dir = get_template_directory().'/';
+		$theme_files = scandir($theme_dir);
+		$wpec_folder_present = in_array('wp-e-commerce', $theme_files);
+		if($wpec_folder_present == false):
+			$body = '<div class="wpec-tc-warning">Warning no <code>wp-e-commerce</code> folder was found in your theme directory</div>';
+		$this -> add_setting('wpec_tc_hidden_warning_place_holder');
+		$this -> gandalf -> add_control(   
+		new WPEC_Theme_Customizer_Info_Control($this -> gandalf, 'wpec_tc_hidden_warning_place_holder', 
+		array('settings' => 'wpec_tc_hidden_warning_place_holder', 'label' => 'wpec_tc_hidden_warning_place_holder', 'section' => $section), $body));
+		endif;
+	}  
+  
+	/**
+	 * add a subheader
+	 */
+	public function add_subheader($body, $section){
+		$this -> add_setting('wpec_tc_hidden_subheader_place_holder');
+		$this -> gandalf -> add_control(
+		new WPEC_Theme_Customizer_Info_Control($this -> gandalf, 'wpec_tc_hidden_subheader_place_holder', 
+		array('settings' => 'wpec_tc_hidden_subheader_place_holder', 'label' => 'wpec_tc_hidden_subheader_place_holder', 'section' => $section),
+		 '<b class="wpec-tc-subheader">'.$body.'</b>'));
+		 
 	} 
 
 	/**

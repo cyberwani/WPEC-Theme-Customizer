@@ -1,4 +1,8 @@
 <?php
+/**
+ * Base class to enqueue common JS files extends the core WP_Customize_Control
+ * This class is only available when the Core Theme Customizer is open
+ */
 class WPEC_Theme_Customizer_Base_Control extends WP_Customize_Control{
 	public function enqueue() {
 		wp_enqueue_script('wpec-tc-utils', WPEC_TC_DIRECTORY . '/js/wpec-theme-customizer-utils.js', array('jquery','jquery-ui'));
@@ -33,7 +37,7 @@ class WPEC_Theme_Customizer_Slider_Control extends WPEC_Theme_Customizer_Base_Co
 		?>
 		<label>
 			<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
-			<div class='wpec-tc-control-wrapper'>
+			<div class='wpec-tc-control-wrapper wpec-tc-slider'>
 				<p>
 				<div id='<?php echo $this->slider_id; ?>'></div>
 				</p>

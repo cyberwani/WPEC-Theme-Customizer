@@ -1,32 +1,34 @@
 /**
  * 	Custom controls css for Gandalf screen
  */
-.wpec-tc-control-wrapper{
+.wpec-tc-control-wrapper {
 	margin-top: 15px;
 	padding: 5px;
 }
-.wpec-tc-sortable-wrapper{
-	margin-top:25px;
+.wpec-tc-sortable-wrapper {
+	margin-top: 25px;
 }
-body .customize-control{
+body .customize-control {
 	width: 100%;
 	padding-bottom: 5px;
 }
-/*
-body .customize-control{
-	border-top: 1px solid #ddd;
-}
-body .customize-control:nth-child(1){
-	border:0px;
-}*/
 .wpec-tc-info-control {
 	padding: 0px;
 	margin: 5px 0px;
 }
-.ui-sortable-placeholder{
-	border:2px dashed #444;
+.wpec-tc-slider p {
+	text-align: center;
 }
-
+.wpec-tc-warning {
+	padding: 5px;background 2px solid lightYellow;
+	border-color: #E6DB55;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+.ui-sortable-placeholder {
+	border: 2px dashed #444;
+}
 .sortable-item {
 
 	background-color: whiteSmoke;
@@ -44,8 +46,7 @@ body .customize-control:nth-child(1){
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
-
-.sortable-item-inner{
+.sortable-item-inner {
 	padding: 5px;
 	background-color: #F1F1F1;
 	background-image: -ms-linear-gradient(top,#F9F9F9,#ECECEC);
@@ -59,7 +60,6 @@ body .customize-control:nth-child(1){
 	font-size: 12px;
 	font-weight: bold;
 	overflow: hidden;
-	
 	border-bottom-color: #DFDFDF;
 	text-shadow: white 0 1px 0;
 	-moz-box-shadow: 0 1px 0 #fff;
@@ -70,18 +70,16 @@ body .customize-control:nth-child(1){
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
-
-.sortable-icon, .sortable-name{
-	display:inline-block;
-	vertical-align:middle;
+.sortable-icon, .sortable-name {
+	display: inline-block;
+	vertical-align: middle;
 }
-
-.ui-sortable-helper{
--moz-box-shadow:  inset 0 1px 0 #fff, 0px 0px 4px 1px rgba(86,180,239,0.8);
--webkit-box-shadow: inset 0 1px 0 #fff, 0px 0px 4px 1px rgba(86,180,239,0.8);
+.ui-sortable-helper {
+	-moz-box-shadow: inset 0 1px 0 #fff, 0px 0px 4px 1px rgba(86,180,239,0.8);
+	-webkit-box-shadow: inset 0 1px 0 #fff, 0px 0px 4px 1px rgba(86,180,239,0.8);
 	box-shadow: inset 0 1px 0 #fff, 0px 0px 4px 1px rgba(86,180,239,0.8);;
 }
-#wpec-tc-loading-bar{
+#wpec-tc-loading-bar {
 	position: absolute;
 	top: 9px;
 	left: 250px;
@@ -91,32 +89,35 @@ body .customize-control:nth-child(1){
 	z-index: 999;
 }
 #wpec-tc-code-mirror-div {
-        position: relative;
-        width: 250px;
-        height: 200px;
+	position: relative;
+	width: 250px;
+	height: 200px;
 }
 .code-mirror-credits {
-font-size: 10px;
-margin-right:4px;  
+	font-size: 10px;
+	margin-right: 4px;
 }
-.code-mirror-controls{
-	margin-top:1px;
+.code-mirror-controls {
+	margin-top: 1px;
 }
-.code-mirror-controls .button{
+.code-mirror-controls .button {
 	float: right;
 }
-#wpec-tc-code-mirror-wrapper{
-	display:block;
+#wpec-tc-code-mirror-wrapper {
+	display: block;
 }
-.CodeMirror-scroll{
-width: 100%;
-display:block;
-position:relative;
+.CodeMirror-scroll {
+	width: 100%;
+	display: block;
+	position: relative;
+	height: auto;
+	overflow-y: hidden;
+	overflow-x: auto;
 }
 .CodeMirror {
-background: white;
-border: 1px solid #ddd;
-}   
+	background: white;
+	border: 1px solid #ddd;
+}
 .CodeMirror-scroll::-webkit-scrollbar {
 	width: 12px;
 	background: #272727;
