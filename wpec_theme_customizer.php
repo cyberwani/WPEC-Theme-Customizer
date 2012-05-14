@@ -351,12 +351,6 @@ class WPEC_Theme_Customizer {
 		
 		//--------------------wpec thumbnails--------------------//
 		$gandalf -> add_section('wpec_thumbnails', array('title' => __('WPEC Thumbnails'), 'priority' => 2));
-/*
-[12:02:59 p.m.] Gary Cao:  $crop = wpsc_get_option( 'crop_thumbnails' );
- add_image_size( 'wpsc_product_single_thumbnail', get_option( 'single_view_image_width' ), get_option( 'single_view_image_height' ), $crop );
- add_image_size( 'wpsc_product_archive_thumbnail', get_option( 'product_image_width' ), get_option( 'product_image_height' ), $crop );
- add_image_size( 'wpsc_product_taxonomy_thumbnail', get_option( 'category_image_width' ), get_option( 'product_image_height' ), $crop );
- add_image_size( 'wpsc_product_cart_thumbnail', 64, 64, $crop );*/
 		//crop thumbnails
 		$radagast -> add_checkbox('wpsc_crop_thumbnails', 'Crop Thumbnails', 'wpec_thumbnails');
 		//default image sizes
@@ -376,7 +370,7 @@ class WPEC_Theme_Customizer {
 		$radagast -> add_checkbox('wpsc_category_description', 'Show Product Category Description', 'wpec_categories');
 		//category thumbnails
 		$radagast -> add_checkbox('show_category_thumbnails', 'Show Product Category Thumbnails', 'wpec_categories');
-		//category gridview
+		//category gridview
 		$radagast -> add_checkbox('wpsc_category_grid_view', 'Category Grid View', 'wpec_categories');
 		//--------------------header section--------------------//
 		//add logo image
