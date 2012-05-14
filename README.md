@@ -1,7 +1,6 @@
 WPEC-Theme-Customizer
 ====================
 
-Wordpress plugin for modifying the display of Wordpress E Commerce items.
+A Wordpress plugin for modifying the display of Wordpress E Commerce items through the use of
+the Wordpress Theme Customizer of 'Gandalf'.
 
-About
--------
