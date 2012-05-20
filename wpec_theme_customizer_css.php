@@ -31,7 +31,6 @@ class WPEC_Theme_Customizer_Style_Generator{
  ----------------------------------------------------------------------------*/
 		<?php     
 		
-		
 				$code_mirror = split('<LINEBREAK>', get_option('wpec_tc_css_coder_value'));
 				foreach($code_mirror as $code)
 				{

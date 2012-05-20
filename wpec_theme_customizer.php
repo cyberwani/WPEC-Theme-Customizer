@@ -37,7 +37,8 @@ inject css.
  
 //TODO change this to plugin directory
 define('WPEC_TC_DIRECTORY', plugins_url().'/wpec-theme-customizer-plugin');
-
+//require exporter class
+require('wpec_theme_customizer_xml.php');  	
 $wpec_theme_customizer = new WPEC_Theme_Customizer();
 
 /**
@@ -59,6 +60,8 @@ class WPEC_Theme_Customizer {
 		add_action('wp_before_admin_bar_render', array($this, 'admin_bar_menu'));
 		//add settings page
 		add_action('admin_menu', array($this, 'add_settings_page'));
+		//add hook to handle form submissions on settings page
+		add_action( 'admin_init', array($this,'admin_init_hook') );
 		//show nag if option unset
 		if ( !get_option('wpec_theme_customizer_nag') )
  			add_action( 'admin_notices', array($this, 'activation_nag' ));
@@ -141,45 +144,90 @@ class WPEC_Theme_Customizer {
 			<div id="icon-options-general" class="icon32">
 				<br>
 			</div><h2>WPEC Theme Customizer</h2>
-			<div id="metabox-holder" class="metabox-holder">
-				<div id="wpec-taxes-rates-container" class="postbox">
-					<h3 class="hndle" style="cursor: default">File Migration</h3>
-					<div class="inside">
-						<p>
-							The WPEC Theme Customizer alters options in the <code>
-								WPEC Theme Options API</code>
-							.
-							Your theme must listen for these option for the customizer to have an affect. The customizer
-							includes a series of standard WPEC template files that have been modified to include these
-							options. You will need to move these templates into <code><?php bloginfo('template_url');
-								?>/
-								wp-e-commerce</code>
-						</p>
-						<p>
-							<?php
-							/**
-							 * Form submits POST variable 'wp_tc_checkboxes' as an array of checked values
-							 */
-							?>
-							<form name='wpec_tc_template_form' action='options-general.php?page=wpec_theme_customizer_settings' method='post'>
-							<b>Template Files</b>
-							<?php 
-							$this->list_templates(); 
-							?>
-							<input type='submit' class='button' value='Migrate Template Files to Theme' />
-							</form>
-							<img src="http://jackmahoney.co.nz/_dollars/wp-admin/images/wpspin_light.gif" class="ajax-feedback" title="" alt="">
-						</p>
-						<p>
-							<b>Current Theme Setup</b><br/>
-							<?php $this->scan_theme_dir();?>
-						</p>
+				<div id="metabox-holder" class="metabox-holder">
+					<div id="wpec-taxes-rates-container" class="postbox">
+						<h3 class="hndle" style="cursor: default">File Migration</h3>
+						<div class="inside">
+							<p>
+								The WPEC Theme Customizer alters options in the <code>
+									WPEC Theme Options API</code>
+								.
+								Your theme must listen for these option for the customizer to have an affect. The customizer
+								includes a series of standard WPEC template files that have been modified to include these
+								options. You will need to move these templates into <code><?php bloginfo('template_url');
+									?>/
+									wp-e-commerce</code>
+							</p>
+							<table>
+								<tr>
+								<td>
+								<p>
+									<?php
+									/**
+									 * Form submits POST variable 'wp_tc_checkboxes' as an array of checked values
+									 */
+									?>
+									<form name='wpec_tc_template_form' action='options-general.php?page=wpec_theme_customizer_settings' method='post'>
+									<b>Template Files</b>
+									<?php 
+									$this->list_templates(); 
+									?>
+									<input type='submit' class='button' value='Migrate Template Files to Theme' />
+									</form>
+									<img src="http://jackmahoney.co.nz/_dollars/wp-admin/images/wpspin_light.gif" class="ajax-feedback" title="" alt="">
+								</p>
+								</td>
+								<td>
+								<p>
+								<b>Current Theme Setup</b><br/>
+								<?php $this->scan_theme_dir();?>
+								</p>	
+								</td>
+								</tr>
+							</table>
+						</div>
 					</div>
-				</div>
+				<div id="metabox-holder" class="metabox-holder">
+					<div id="wpec-taxes-rates-container" class="postbox">
+						<h3 class="hndle" style="cursor: default">Import / Export</h3>
+						<div class="inside">
+							<p>
+								Import your options and their values for the current controls
+							</p>
+							<p>
+								<?php
+								$options = get_option('wpec_tc_active_controls_option_list');
+								if(!$options):
+									echo 'No controls initialized';
+								else:
+									echo "
+									<form action='' method='get'>
+									<input name='page' value='wpec_theme_customizer_settings' hidden='hidden'/>
+									<input type='submit' name='export' class='button' value='Export' />
+									<input type='submit' name='import' class='button' value='Import' />
+									</form>"; 
+								endif;
+								?>
+							</p>
+						</div>
+					</div>
 			</div>
 		</div>
 	<?php
 	}
+
+	/**
+	 * add the hooks to handle form submissions on the settings page
+	 */
+	public function admin_init_hook(){
+		if($_GET['page'] == 'wpec_theme_customizer_settings'):	
+			if($_GET['export']):
+				$exporter = new WPEC_Theme_Customizer_XML();
+				$exporter->export_options();	
+			endif;
+		endif;
+	}
+
 	/**
 	 * echo out admin stylesheet
 	 */
@@ -398,7 +446,9 @@ class WPEC_Theme_Customizer {
 		//body color
 		$radagast -> add_color_control('_d_header_text_color', 'Header Text Color', 'text');
 		$radagast -> add_color_control('_d_body_text_color', 'Body Text Color', 'text');
-
+		
+		//import call to tidy up all added controls
+		$radagast -> finish_run();
 
 	}
 
@@ -408,7 +458,8 @@ class WPEC_Theme_Customizer {
  * Convenience class for adding settings and controls to Gandalf
  */
 class Radagast_The_Brown{
-	public $gandalf;
+	protected $gandalf;
+	protected $options;
 	/**
 	 * constucts Radagast with Gandalf pointer
 	 *
@@ -423,12 +474,25 @@ class Radagast_The_Brown{
 	}
 
 	/**
+	 * Update the list of options being used by active controls and their values at 
+	 * the time of last construction
+	 */
+	public function finish_run(){
+		update_option('wpec_tc_active_controls_option_list', $this->options);
+	}
+
+	/**
 	 * check for options existence and set with passed value if null
+	 * Then add the option to the running tally of options in the $options
+	 * array. This is used in finish_run to update the list of export and 
+	 * import settings
 	 */
 	public function check_option($option, $default = '') {
-		if (get_option($option) == false) {
+		$option_value = get_option($option);	
+		if ($option_value == false) {
 			add_option($option, $default);
 		}
+		$this->options[] = array('name' => $option, 'value' => $option_value);
 	}
 
 	/**
