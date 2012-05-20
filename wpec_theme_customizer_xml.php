@@ -1,4 +1,18 @@
 <?php
+/**
+ * Class for importing and exporting the current options used by
+ * WPEC Theme Customizer controls. The array of options and their 
+ * values is updated each time the controls panel is built and only
+ * their initial value is saved. Output is of the format
+ * 
+ * <WPEC-Theme-Customizer-Options>
+ *     <option>
+ * 			<name></name>
+ * 			<value></value>
+ * 	   </option>
+ * </WPEC-Theme-Customizer-Options>
+ * 
+ */
 class WPEC_Theme_Customizer_XML{
 	private $options;
 	
