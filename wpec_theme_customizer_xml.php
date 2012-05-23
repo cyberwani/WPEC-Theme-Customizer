@@ -13,6 +13,11 @@
  * </WPEC-Theme-Customizer-Options>
  * 
  */
+ 
+ /**
+ * this is my added comment
+ */
+ 
 class WPEC_Theme_Customizer_XML{
 	private $options;
 	
