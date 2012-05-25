@@ -46,6 +46,7 @@ $wpec_theme_customizer = new WPEC_Theme_Customizer();
  * Also loads dependancies and creates hooks for capturing option changes
  */
 class WPEC_Theme_Customizer {
+	
 	public function __construct() {
 		add_theme_support( 'custom-background' );
 		//enque scripts
@@ -204,8 +205,12 @@ class WPEC_Theme_Customizer {
 									<form action='' method='get'>
 									<input name='page' value='wpec_theme_customizer_settings' hidden='hidden'/>
 									<input type='submit' name='export' class='button' value='Export' />
-									<input type='submit' name='import' class='button' value='Import' />
-									</form>"; 
+									</form>";
+									echo '<form enctype="multipart/form-data" action="" method="POST">
+									<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+									<input name="uploaded_wpectc_file" type="file" />
+									<input class="button" type="submit" value="Upload File" />
+									</form> ';
 								endif;
 								?>
 							</p>
@@ -225,6 +230,12 @@ class WPEC_Theme_Customizer {
 				$exporter = new WPEC_Theme_Customizer_XML();
 				$exporter->export_options();	
 			endif;
+			if($_FILES['uploaded_wpectc_file']):
+				$xml = $_FILES['uploaded_wpectc_file']['tmp_name'];
+				$importer = new WPEC_Theme_Customizer_XML();
+				$importer->import_options($xml);
+				unset($_FILES['uploaded_wpectc_file']);
+			endif;    
 		endif;
 	}
 

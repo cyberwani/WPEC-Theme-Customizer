@@ -19,9 +19,24 @@ class WPEC_Theme_Customizer_XML{
 	public function __construct($option_list = 'wpec_tc_active_controls_option_list'){
 		$this->options = get_option($option_list);	
 	}	
-	
+	/**
+	 * parse the given XML and update the option in the database
+	 */
 	public function import_options($xml){
-		
+		$xmlDoc = new SimpleXMLElement(file_get_contents($xml));
+		$optionCount = 0;
+		foreach($xmlDoc->option as $option)
+		{
+			$name = $option->name;
+			$value = $option->value;
+			if($name != '')
+			{
+				if($value = '')
+				$value = 0;
+				update_option($name,$value);
+				$optionCount++;
+			}
+		}		
 	}
 	/**
 	 * read used options and their values from array and force download
