@@ -58,94 +58,56 @@ class WPEC_Theme_Customizer extends WPEC_Theme_Customizer_Base{
 	 */
 	public function populate_gandalf($gandalf) {
 		$radagast = new Radagast_The_Brown($gandalf);
-		//--------------------wpec help --------------------//		
-		$gandalf -> add_section('wpec_help_page', array('title' => __('WPEC Help'), 'priority' => 1));
-		$radagast -> add_warning('wpec_help_page');
-		$radagast->add_info('<p><img style="float:left;margin:0px 10px 5px 0px;" src="http://jackmahoney.co.nz/_dollars/wp-content/uploads/getshopped4.png"/>
-		Welcome to the WPEC Theme Customizer. Some options will taking longer to update than others. Make sure you save changes when you
-		are finished. See <a href="#" target="blank">getshopped.org/wpec-theme-customizer</a> for more information.','wpec_help_page');
-		//--------------------theme section--------------------//	
-		$gandalf -> add_section('wpec_theme_section', array('title' => __('Theme Settings'), 'priority' => 0));
-	    $radagast -> add_css_coder('wpec_theme_section');
-		$radagast-> add_sortable_sidebar_control('wpec_toapi_wpsc_sortable_widget_order', 'Sortable Widgets', 'wpec_theme_section');
-		
-		//--------------------wpec products --------------------//
-		$gandalf -> add_section('wpec_product_settings', array('title' => __('WPEC Product Settings'), 'priority' => 1));
-
-		$radagast -> add_checkbox('wpec_toapi_product_ratings', 'Product Ratings', 'wpec_product_settings');
-		$radagast -> add_checkbox('wpec_toapi_link_in_title', 'Link in Title', 'wpec_product_settings');
-		//button styles
-		$radagast -> add_select('wpec_toapi_button_style', 'Button Styles', 'wpec_product_settings', array('none' => __('None'), 'silver' => __('Silver'), 'blue' => __('Blue'), 'matt-green matt-button' => __('Matt Green'), 'matt-orange matt-button' => __('Matt Orange'), 'yellow' => __('Yellow'), 'red' => __('Red'), ));
-		//--------------------wpec products page--------------------//
-	
-		$gandalf -> add_section('wpec_product_page', array('title' => __('WPEC Products Page'), 'priority' => 2));
-		//wpsc_category_grid_view
-		$radagast -> add_select('wpec_toapi_taxonomy_view', 'Product Display Format', 'wpec_product_page', array('list' => __('List'), 'grid' => __('Grid')));
-		//grid item width slider
-		$radagast-> add_slider_control('wpec_toapi_wpsc_grid_view_item_width', 'Grid View Item Width', 'wpec_product_page', array('min'=>50,'max'=>500));
-		//add sortable widget control
-		
-		
-		//grid description 	
-		$radagast -> add_checkbox('wpec_toapi_wpsc_products_page_description', 'Description', 'wpec_product_page');
-		$radagast -> add_checkbox('wpec_toapi_wpsc_grid_view_masonry', 'Grid View Masonry', 'wpec_product_page');
-		//show categories and breadcrumbs
-		$radagast -> add_checkbox('wpec_toapi_show_categories', 'Show categories', 'wpec_product_page', 0);
-		$radagast -> add_checkbox('wpec_toapi_show_breadcrumbs', 'Show Breadcrumbs', 'wpec_product_page');
-		//Sort Product By
-		$radagast -> add_select('wpsc_sort_by', 'Sort Product By', 'wpec_product_page', array('name' => __('Name'), 'price' => __('Price'), 'dragndrop' => __('Drag n Drop'), 'id' => __('Id')));
-		
-		//--------------------wpec thumbnails--------------------//
-		$gandalf -> add_section('wpec_thumbnails', array('title' => __('WPEC Thumbnails'), 'priority' => 2));
-		//crop thumbnails
-		$radagast -> add_checkbox('wpsc_crop_thumbnails', 'Crop Thumbnails', 'wpec_thumbnails');
-		//default image sizes
-		$radagast -> add_textfield('product_image_width', 'Default Product Thumbnail Width', 'wpec_thumbnails');
-		$radagast -> add_textfield('product_image_height', 'Default Product Thumbnail Height', 'wpec_thumbnails');
-		//category image sizes
-		$radagast -> add_subheader('Taxonomy Thumbnail', 'wpec_thumbnails');  
-		$radagast -> add_textfield('category_image_width', 'Taxonomy Thumbnail Width', 'wpec_thumbnails');
-		$radagast -> add_textfield('category_image_height', 'Taxonomy Thumbnail Height', 'wpec_thumbnails');
-		//single product group image sizes
-		$radagast -> add_textfield('single_view_image_width', 'Single Product Image Width', 'wpec_thumbnails');
-		$radagast -> add_textfield('single_view_image_height', 'Single Product Image Height', 'wpec_thumbnails');
-		
-		//--------------------wpec category section--------------------//
-		$gandalf -> add_section('wpec_categories', array('title' => __('WPEC Categories'), 'priority' => 3));
-		//category description
-		$radagast -> add_checkbox('wpsc_category_description', 'Show Product Category Description', 'wpec_categories');
-		//category thumbnails
-		$radagast -> add_checkbox('show_category_thumbnails', 'Show Product Category Thumbnails', 'wpec_categories');
-		//category gridview
-		$radagast -> add_checkbox('wpsc_category_grid_view', 'Category Grid View', 'wpec_categories');
-		//--------------------header section--------------------//
-		//add logo image
-		$radagast -> add_image_control('_d_logo_image', 'Logo Image', 'header');
-		//display logo checkbox
-		$radagast -> add_checkbox('_d_display_logo_image', 'Display Logo', 'header');
-		//add search checkbox
-		$radagast -> add_checkbox('_d_header_search', 'Show Search Bar', 'header');
-
-		//----------------text section-------------------//
-		//add section
-		$gandalf -> add_section('text', array('title' => __('Text Styles'), 'priority' => 4, ));
-		//add link color
-		$radagast -> add_color_control('_d_link_color', 'Link Color', 'text');
-		//add link hover
-		$radagast -> add_color_control('_d_link_color_hover', 'Link Color Hover', 'text');
-		//add link visited
-		$radagast -> add_color_control('_d_link_color_visited', 'Link Color Visited', 'text');
-		//add font choices
-		$font_choices = array('Helvetica Neue' => 'Helvetica Neue', 'Lato' => 'Lato', 'Arvo' => 'Arvo', 'Muli' => 'Muli', 'Play' => 'Play', 'Oswald' => 'Oswald');
-		//add header font
-		$radagast -> add_select('_d_impact_font', 'Header Font', 'text', $font_choices);
-		//add body font
-		$radagast -> add_select('_d_body_font', 'Body Font', 'text', $font_choices);
-		//body color
-		$radagast -> add_color_control('_d_header_text_color', 'Header Text Color', 'text');
-		$radagast -> add_color_control('_d_body_text_color', 'Body Text Color', 'text');
-		
-		//import call to tidy up all added controls
+		//Products Page
+		$product_page = $radagast -> add_section('wpec_product_page', 'Product Page');
+			$product_page->add_radio('wpec_toapi_pp_rating', 'Show Product Ratings', false);
+			$product_page->add_radio('wpec_toapi_pp_price', 'Show Product Price', true);
+			$product_page->add_radio('wpec_toapi_pp_desc', 'Show Product Description', true);
+			$product_page->add_radio('wpec_toapi_pp_add_desc', 'Show Product Additional Description', false);
+			$product_page->add_radio('wpec_toapi_pp_add_to_cart', 'Show Add To Cart Button', true	);
+			$product_page->add_radio('wpec_toapi_pp_link_title','Link The Product Title',true);
+			$product_page->add_select('wpec_toapi_pp_sort_by','Sort Product By', array('Name', 'Price', 'Time Uploaded', 'Drag and Drop' ));
+			$product_page->add_select('wpec_toapi_pp_main_display','Main Page Displays', array('All Products', 'User Selected', 'Categories' ));
+			$product_page->add_textfield('wpec_toapi_pp_image_size_width', 'Thumbnail Width', 200);
+			$product_page->add_textfield('wpec_toapi_pp_image_size_height', 'Thumbnail Height', 200);
+		//Single Product Page			
+		$single_products = $radagast->add_section('wpec_single_product', 'Single Product Page');
+			$single_products->add_radio('wpec_toapi_sp_rating','Show Product Rating', false);
+			$single_products->add_radio('wpec_toapi_sp_price','Show Product Price', true);
+			$single_products->add_radio('wpec_toapi_sp_desc','Show Product Description', true);
+			$single_products->add_radio('wpec_toapi_sp_add_desc','Show Additional Product Description', true);
+			$single_products->add_radio('wpec_toapi_sp_add_to_cart','Show Add To Cart Button', true);
+			$single_products->add_radio('wpec_toapi_sp_product_meta','Show Product Meta', false);
+			$single_products->add_textfield('wpec_toapi_sp_image_size_width', 'Thumbnail Width', 300);
+			$single_products->add_textfield('wpec_toapi_sp_image_size_height', 'Thumbnail Height', 300);
+		//General Product Settings
+		$general_products = $radagast->add_section('wpec_general_product','General Product Settings');
+			$general_products->add_radio('wpec_toapi_gp_show_breadcrumbs','Show Breadcrumbs',false);
+			$general_products->add_select('wpec_toapi_button_style', 'Button Styles',
+			array('none' => __('None'), 
+			'silver' => __('Silver'), 
+			'blue' => __('Blue'), 
+			'matt-green matt-button' => __('Matt Green'), 
+			'matt-orange matt-button' => __('Matt Orange'), 
+			'yellow' => __('Yellow'), 'red' => __('Red'), ));
+		// //Gold Cart Settings
+		if($this->has_goldcart()): 
+			$gold_cart = $radagast->add_section('wpec_gold_cart','Gold Cart Settings');
+				$gold_cart->add_radio('wpec_toapi_gc_search','Display Search',false);
+				$gold_cart->add_select('wpec_toapi_gc_display_gallery','Display Thumbail Gallery', array('Off','Single Product','Main Product','Both'));
+				$gold_cart->add_select('wpec_toapi_gc_product_display_view','Product Display View', array('Default','Grid','Grid'));
+				$gold_cart->add_textfield('wpec_toapi_gc_gallery_image_size_width', 'Thumbnail Width', 50);
+				$gold_cart->add_textfield('wpec_toapi_gc_gallery_image_size_height', 'Thumbnail Height', 50);
+				$gold_cart->add_textfield('wpec_toapi_gc_grid_view_size_width', 'Grid Width', 50);
+				$gold_cart->add_textfield('wpec_toapi_gc_grid_view_size_height', 'Grid Height', 50);
+		endif;
+		//Category Settings
+		$categories = $radagast->add_section('wpec_categories','Category Settings');
+			$categories->add_radio('wpec_toapi_cs_show_image','Show Category Image',false);
+			$categories->add_radio('wpec_toapi_cs_desc','Show Category Description',false);
+			$categories->add_textfield('wpec_toapi_cs_thumbnail_size_width', 'Category Thumbnail Width', 50);
+			$categories->add_textfield('wpec_toapi_cs_thumbnail_size_height', 'Category Thumbnail Height', 50);
+		//important call to tidy up all added controls
 		$radagast -> finish_run();
 
 	}

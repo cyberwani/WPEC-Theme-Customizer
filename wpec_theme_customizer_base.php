@@ -195,6 +195,10 @@ class WPEC_Theme_Customizer_Base {
 		endif;
 	}
 
+	public function has_goldcart(){
+		return true; //TODO check for gold cart installation
+	}
+
 	/**
 	 * echo out admin stylesheet
 	 */
