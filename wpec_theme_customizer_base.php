@@ -30,9 +30,10 @@ class WPEC_Theme_Customizer_Base {
 	}
 	/**
 	* See if gandalf features are available
+	* TODO make test for valid wp
 	*/
 	protected function has_valid_wordpress(){
-		return class_exists('wp-customizer.php');
+		return true;
 	}
 	/**
 	 * alert shown on plugin activation
