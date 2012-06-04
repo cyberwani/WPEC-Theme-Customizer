@@ -34,10 +34,8 @@ the theme's <head></head>. Here you can use php conditionals for options to
 inject css.
  
 -------------------------------------------------------------*/
- 
 //TODO change this to plugin directory
 define('WPEC_TC_DIRECTORY', plugins_url().'/wpec-theme-customizer-plugin');
-//require exporter class
 require('wpec_theme_customizer_xml.php');  	
 require('wpec_theme_customizer_base.php');  	  
 require('wpec_theme_customizer_radagast.php');  	
@@ -46,9 +44,13 @@ require('wpec_theme_customizer_radagast.php');
 class WPEC_Theme_Customizer extends WPEC_Theme_Customizer_Base{
 	
 	public function __construct(){
-		parent::__construct();
-		//hook for customizer
-		add_action('customize_register', array($this, 'populate_gandalf'));     
+		if($this->has_valid_wordpress()):
+			parent::__construct();
+			//hook for customizer
+			add_action('customize_register', array($this, 'populate_gandalf'));     
+		else:
+			add_action( 'admin_notices', array($this, 'activation_nag' ));
+		endif;
 	}
 	/**
 	 * Action hook for Theme Customizer (Gandalf)

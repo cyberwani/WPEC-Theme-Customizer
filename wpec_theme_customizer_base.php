@@ -20,22 +20,30 @@ class WPEC_Theme_Customizer_Base {
 		//add hook to handle form submissions on settings page
 		add_action( 'admin_init', array($this,'admin_init_hook') );
 		//show nag if option unset
-		if ( !get_option('wpec_theme_customizer_nag') )
- 			add_action( 'admin_notices', array($this, 'activation_nag' ));
+ 		add_action( 'admin_notices', array($this, 'activation_nag' ));
 		//allow nag to be removed
 		add_action('wp_loaded', array($this, 'remove_nag'));
 		//echo admin stylesheet
 		add_action('admin_head', array($this, 'admin_styles'));
 		//theme switch files
 		//add_filter( 'template', array($this, 'get_theme_template'));
-		
+	}
+	/**
+	* See if gandalf features are available
+	*/
+	protected function has_valid_wordpress(){
+		return class_exists('wp-customizer.php');
 	}
 	/**
 	 * alert shown on plugin activation
 	 */
 	public function activation_nag(){
-	
-	if (!get_option( 'wpec_theme_customizer_nag' )):
+	if(!$this->has_valid_wordpress()):?>
+	<div id="message" class="updated fade">
+		<p>This version of Wordpress does not support the WPEC Theme Customizer features. Please upgrade Wordpress.</p>
+	</div>
+	<?php
+	elseif (!get_option( 'wpec_theme_customizer_nag' )):
 	?>
 	  <div id="message" class="updated fade">
 	   <p><?php printf(  '<strong>Configure WPEC Theme Customizer</strong><br /> 
