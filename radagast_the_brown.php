@@ -16,8 +16,8 @@ class Radagast_The_Brown{
 	 * and then call appropriate methods.
 	 */
 	public function __construct($gandalf, $section_id = null) {
-		include_once('wpec_theme_customizer_controls.php');  
-		include_once('wpec_theme_customizer_section.php');  
+		include_once('custom_controls.php');  
+		include_once('section.php');  
 		$this -> gandalf = $gandalf;
 		$this -> priority_count = 0;
 		$this -> section_id = $section_id;

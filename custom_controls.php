@@ -5,7 +5,7 @@
  */
 class WPEC_Theme_Customizer_Base_Control extends WP_Customize_Control{
 	public function enqueue() {
-		wp_enqueue_script('wpec-tc-utils', WPEC_TC_DIRECTORY . '/js/wpec-theme-customizer-utils.js', array('jquery','jquery-ui'));
+		wp_enqueue_script('wpec-tc-utils', WPEC_TC_DIRECTORY . '/js/customizer.js', array('jquery','jquery-ui'));
 		wp_enqueue_script('jquery-ui', WPEC_TC_DIRECTORY . '/js/jquery-ui-1.8.20.custom.min.js', array('jquery'));
 		wp_enqueue_style('jquery-ui-aristo', WPEC_TC_DIRECTORY . '/css/aristo/aristo.css');
 		wp_enqueue_style('wpec-tc-custom-controls', WPEC_TC_DIRECTORY . '/css/wpec-tc-custom-controls.css');
