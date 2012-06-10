@@ -1,7 +1,9 @@
 /**
  * 	Styles for admin backend
  */
-
+.ab-gandaf {
+	background: url('../images/brush.png') no-repeat left center;
+}
 #template-checkboxes {
 margin: 20px 10px;
 }

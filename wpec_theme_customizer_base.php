@@ -23,22 +23,18 @@ class WPEC_Theme_Customizer_Base {
  		add_action( 'admin_notices', array($this, 'activation_nag' ));
 		//allow nag to be removed
 		add_action('wp_loaded', array($this, 'remove_nag'));
-		//echo admin stylesheet
+		//enqueue admin stylesheet
 		add_action('admin_head', array($this, 'admin_styles'));
-		//theme switch files
-		//add_filter( 'template', array($this, 'get_theme_template'));
+		//enqueue admin scripts
+		add_action('admin_enqueue_scripts', array($this,'admin_scripts'));
 	}
 	/**
 	* See if gandalf features are available
 	* TODO make test for valid wp
 	*/
 	protected function has_valid_wordpress(){
-<<<<<<< HEAD
 		global $wp_version;	
 		return (floatval($wp_version) >= 3.4);
-=======
-		return true;
->>>>>>> 0275561f89a1f5c9b06c82fca195a439ac45a68f
 	}
 	/**
 	 * alert shown on plugin activation
@@ -143,12 +139,17 @@ class WPEC_Theme_Customizer_Base {
               <link rel="stylesheet" type="text/css" href="'.WPEC_TC_DIRECTORY.'/css/admin-styles.css'. '">';
 	} 
 	/**
+	 * enqueue admin scripts
+	 */
+	public function admin_scripts(){
+		wp_enqueue_script('wpec-tc-admin-js', WPEC_TC_DIRECTORY . '/js/admin.js', array('jquery'));
+	} 
+	/**
 	 * create 'Customize' button in wp admin bar
 	 */
 	public function admin_bar_menu() {
 		global $wp_admin_bar;
-	    $theme_title = strtolower(get_current_theme());
-		$wp_admin_bar -> add_menu(array('id' => '_d_gandalf', 'href' => get_bloginfo('url') . '/wp-admin/admin.php?customize=on&theme='.$theme_title, 'title' => '<span class="ab-icon ab-gandaf"></span><span class="ab-label">Customize</span>', 'meta' => array('title' => 'Customize theme live', ), ));
+		$wp_admin_bar -> add_menu(array('id' => '_d_gandalf', 'href' => get_bloginfo('url') . '/wp-admin/customize.php', 'title' => '<span class="ab-icon ab-gandaf"></span><span class="ab-label">Customize</span>', 'meta' => array('title' => 'Customize theme live', ), ));
 		
 	}
 	/**

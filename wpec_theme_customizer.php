@@ -35,7 +35,7 @@ inject css.
  
 -------------------------------------------------------------*/
 //TODO change this to plugin directory
-define('WPEC_TC_DIRECTORY', plugins_url().'/wpec-theme-customizer-plugin');
+define('WPEC_TC_DIRECTORY', plugins_url().'/WPEC-Theme-Customizer');
 require('xml_handler.php');  	
 require('wpec_theme_customizer_base.php');  	  
 require('radagast_the_brown.php');  	

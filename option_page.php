@@ -30,9 +30,11 @@
 							 * Form submits POST variable 'wp_tc_checkboxes' as an array of checked values
 							 */
 							?>
-							<form name='wpec_tc_template_form' action='options-general.php?page=wpec_theme_customizer_settings' method='post'>
+							<form name='wpec_tc_template_form' id='wpec_tc_template_form' action='options-general.php?page=wpec_theme_customizer_settings' method='post'>
 								<b>Template Files</b>
 								<?php $this -> list_templates();?>
+								<a class='button check-modifier-button' id='check-all'>Select All</a>
+								<a class='button check-modifier-button' id='uncheck-all'>Deselect All</a>
 								<input type='submit' class='button' value='Migrate Template Files to Theme' />
 							</form>
 							<img src="http://jackmahoney.co.nz/_dollars/wp-admin/images/wpspin_light.gif" class="ajax-feedback" title="" alt="">
