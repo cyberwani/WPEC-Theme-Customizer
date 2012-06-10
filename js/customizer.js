@@ -1,6 +1,10 @@
 /**
  * Utility functions for WPEC Theme Customizer
  */
+
+//ensure no conflicts for all controls
+jQuery.noConflict();
+
 jQuery(document).ready(function($) {
 	
 	//create loading bar and get jQuery object	
@@ -11,9 +15,9 @@ jQuery(document).ready(function($) {
 	
 	//set onChange functions	
 	loadingBar.ajaxStart(function() {
-		this.show();
+		loadingBar.show();
 	});
 	loadingBar.ajaxStop(function() {
-		this.hide();
+		loadingBar.hide();
 	});
 });

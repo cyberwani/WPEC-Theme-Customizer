@@ -151,10 +151,10 @@ class Radagast_The_Brown{
 	 */
 	public function add_info($body, $section = null){
 		$section = $this->set_section($section);
-		$this -> add_setting('wpec_tc_hidden_info_place_holder');
+		$placeholder = 'wpec_tc_hidden_info_place_holder'.substr(str_replace(trim($body), ' ', '-'),0,5);
+		$this -> add_setting($placeholder);
 		$this -> gandalf -> add_control(
-		new WPEC_Theme_Customizer_Info_Control($this -> gandalf, 'wpec_tc_hidden_info_place_holder', 
-		array('settings' => 'wpec_tc_hidden_info_place_holder', 'label' => 'wpec_tc_hidden_info_place_holder', 'section' => $section), $body));
+		new WPEC_Theme_Customizer_Info_Control($this -> gandalf, $placeholder, array('settings' => $placeholder, 'label' => $placeholder, 'section' => $section), $body));
 	} 
 	/**
 	 * add warning
@@ -189,7 +189,7 @@ class Radagast_The_Brown{
 	/**
 	 * add slider control
 	 */
-	public function add_slider_control($option, $title, $section = null, $dimens = null){
+	public function add_slider($option, $title, $dimens = null, $section = null){
 		$section = $this->set_section($section);
 		$this -> add_setting($option);
 		$this -> gandalf -> add_control(new WPEC_Theme_Customizer_Slider_Control($this -> gandalf, 

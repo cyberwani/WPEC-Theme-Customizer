@@ -12,50 +12,7 @@ class WPEC_Theme_Customizer_Base_Control extends WP_Customize_Control{
 		
 	}
 }
-/**
- * Array conntrol
- */	
-class WPEC_Theme_Customizer_Array_Control extends WPEC_Theme_Customizer_Base_Control{
-	public $fields;
-	public $id;
-	public function __construct( $manager, $id, $args, $fields) {
-		parent::__construct( $manager, $id, $args );
-		$this->id = $id;
-		$this->fields = $fields;
-	}	
-	
-	public function render_content() {
-		?>
-		<label>
-			<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
-			<div class='wpec-tc-array-control'>
-				<?php
-				if($this->fields)
-				{
-					echo '<table><form>';
-					foreach($this->fields as $field)
-					{
-						echo "
-						<tr>
-							<td>$field</td>
-							<td><input type='text' class='$this->id'/></td>
-						</tr>
-						";
-					}
-					echo '</form></table>';
-				}
-				?>
-				<input id='<?php echo $this->id;?>' value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); ?>/>
-			</div>
-		</label>
-		<script type='text/javascript'>
-		jQuery('.<?php echo $this->id; ?>').each().bind("propertychange keyup input paste", function(event){
-			alert('changed!!');
-		});
-		</script>
-		<?php
-	}
-}
+
 /**
  * Slider control
  */
@@ -91,31 +48,31 @@ class WPEC_Theme_Customizer_Slider_Control extends WPEC_Theme_Customizer_Base_Co
 			</div>
 		</label>
 		<script type='text/javascript'>
-		var display = jQuery("#<?php echo $this->input_id;?>");
-		var slider = jQuery("#<?php echo $this->slider_id; ?>");
-		//setup slider
-		jQuery(function() {
-			slider.slider(
-				{  
-				range: "min",
-				value: <?php echo $this->value() ?  esc_attr( $this->value()) : $this->dimens['min'] ; ?>,
-				min: <?php echo $this->dimens['min']; ?>,
-				max: <?php echo $this->dimens['max']; ?>,
-				slide: function( event, ui ) {
-					display.val(ui.value); //set value of display to match slider
-					var e = jQuery.Event("keyup");
-					e.which = 50; // Some key code value
-					display.trigger(e); //trigger typing event to prompt ajax
+		(function(){
+			var display = jQuery("#<?php echo $this->input_id;?>");
+			var slider = jQuery("#<?php echo $this->slider_id; ?>");
+			//setup slider
+			jQuery(function() {
+				slider.slider(
+					{  
+					range: "min",
+					value: <?php echo $this->value() ?  esc_attr( $this->value()) : intval( ( $this->dimens['max'] + $this->dimens['min']) / 2 ) ; ?>,
+					min: <?php echo $this->dimens['min']; ?>,
+					max: <?php echo $this->dimens['max']; ?>,
+					slide: function( event, ui ) {
+						display.val(ui.value); //set value of display to match slider
+						var e = jQuery.Event("keyup");
+						e.which = 50; // Some key code value
+						display.trigger(e); //trigger typing event to prompt ajax
+								}
 							}
-						}
-					)
+						)
+				});
+			//listen for typed input and adjust slider
+			display.keyup(function() {
+				slider.slider( 'value' , display.val() );
 			});
-		//listen for typed input and adjust slider
-		display.keyup(function() {
-			slider.slider( 'value' , display.val() );
-		});
-		
-		
+		})();
 		</script>
 		<?php
 	}

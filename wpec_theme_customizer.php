@@ -60,6 +60,9 @@ class WPEC_Theme_Customizer extends WPEC_Theme_Customizer_Base{
 	 */
 	public function populate_gandalf($gandalf) {
 		$radagast = new Radagast_The_Brown($gandalf);
+		//Info Panel
+		$info_page = $radagast -> add_section('wpec_about_page', 'About Page');
+			$info_page->add_info('The WPEC Theme Customizer');
 		//Products Page
 		$product_page = $radagast -> add_section('wpec_product_page', 'Product Page');
 			$product_page->add_radio('wpec_toapi_pp_rating', 'Show Product Ratings', false);
@@ -107,8 +110,8 @@ class WPEC_Theme_Customizer extends WPEC_Theme_Customizer_Base{
 		$categories = $radagast->add_section('wpec_categories','Category Settings');
 			$categories->add_radio('wpec_toapi_cs_show_image','Show Category Image',false);
 			$categories->add_radio('wpec_toapi_cs_desc','Show Category Description',false);
-			$categories->add_textfield('wpec_toapi_cs_thumbnail_size_width', 'Category Thumbnail Width', 50);
-			$categories->add_textfield('wpec_toapi_cs_thumbnail_size_height', 'Category Thumbnail Height', 50);
+			$categories->add_slider('wpec_toapi_cs_thumbnail_size_width', 'Category Thumbnail Width', array('min'=> 20, 'max'=> 200));
+			$categories->add_slider('wpec_toapi_cs_thumbnail_size_height', 'Category Thumbnail Height', array('min'=> 20, 'max'=> 200));
 		//important call to tidy up all added controls
 		$radagast -> finish_run();
 
