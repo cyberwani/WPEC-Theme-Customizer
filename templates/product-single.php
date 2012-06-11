@@ -1,15 +1,15 @@
 <div id="product-<?php wpsc_product_id(); ?>">
-	<?php if( get_option('wpec_toapi_show_breadcrumbs') ==1 ) wpsc_breadcrumb(); ?>
+	<?php if( get_option('wpec_toapi_gp_show_breadcrumbs') == 1 ) wpsc_breadcrumb(); ?>
 
 	<div class="wpsc-product-summary">
 	
-	<?php if( get_option('wpec_toapi_sp_desc') ==1 ): ?>
+	<?php if( get_option('wpec_toapi_sp_desc') == 1 ): ?>
 		<div class="wpsc-product-description">
 			<?php wpsc_product_description(); ?>
 		</div>
 	<?php endif; ?>
 
-	<?php if( get_option('wpec_toapi_sp_price') ==1 ): ?>
+	<?php if( get_option('wpec_toapi_sp_price') == 1 ): ?>
 		<div class="wpsc-product-price">
 			<?php if ( wpsc_is_product_on_sale() ): ?>
 				<ins><?php wpsc_product_sale_price(); ?></ins>
@@ -22,7 +22,7 @@
 		</div>
 	<?php endif; ?>
 	
-	<?php if( get_option('wpec_toapi_sp_add_to_cart') ==1 ): ?>
+	<?php if( get_option('wpec_toapi_sp_add_to_cart') == 1 ): ?>
 		<div class="wpsc-add-to-cart-form-wrapper">
 			<?php wpsc_add_to_cart_form(); ?>
 		</div>

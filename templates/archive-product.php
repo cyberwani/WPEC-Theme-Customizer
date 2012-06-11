@@ -9,7 +9,7 @@
 ?>
 
 <?php if ( wpsc_have_products() ) : ?>
-	<?php if( get_option('wpec_toapi_show_breadcrumbs') ==1 ) wpsc_breadcrumb(); ?>
+	<?php if( get_option('wpec_toapi_gp_show_breadcrumbs') == 1 ) wpsc_breadcrumb(); ?>
 	<?php wpsc_product_pagination( 'top' ); ?>
 	<?php wpsc_get_template_part( 'loop', 'products' ); ?>
 	<?php wpsc_product_pagination( 'bottom' ); ?>
