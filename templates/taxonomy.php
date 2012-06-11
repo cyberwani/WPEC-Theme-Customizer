@@ -19,9 +19,9 @@ global $wp_query;
 		<?php wpsc_end_category_query(); ?>
 	
 	<?php wpsc_product_pagination( 'top' ); ?>
-			<div id='wpec-product-grid' 
-		<?php if( get_option('wpec_toapi_taxonomy_view') =='grid' ):?>
-			class="<?php if(get_option('wpec_toapi_wpsc_grid_view_masonry')==1) echo 'masonry-container';?>">
+
+		<?php if( get_option('wpec_toapi_gc_product_display_view') =='grid' ):?>
+			<div id='wpec-product-grid' class="<?php if(get_option('wpec_toapi_wpsc_grid_view_masonry')==1) echo 'masonry-container';?>">
 			<?php wpsc_get_template_part( 'loop', 'grid-products' ); ?>
 			</div>
 		<?php else:?>
