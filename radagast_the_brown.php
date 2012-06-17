@@ -238,7 +238,7 @@ class Radagast_The_Brown{
 	/**
 	 * add theme switcher
 	 */
-	public function add_css_coder($section = null){
+	public function add_code_mirror($section = null){
 		$section = $this->set_section($section);
 		$title = 'CSS Coder';
 		$themes = get_themes();

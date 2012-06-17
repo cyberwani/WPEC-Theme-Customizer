@@ -38,42 +38,22 @@ class WPEC_Theme_Customizer_Slider_Control extends WPEC_Theme_Customizer_Base_Co
 		?>
 		<label>
 			<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
-			<div class='wpec-tc-control-wrapper wpec-tc-slider'>
+			<div class='wpec-tc-control-wrapper '>
 				<p>
-				<div id='<?php echo $this->slider_id; ?>'></div>
+				<div class='wpec-tc-slider'
+					id="<?php echo $this->slider_id; ?>" 
+					data-value="<?php echo $this->value() ?  esc_attr( $this->value()) : intval( ( $this->dimens['max'] + $this->dimens['min']) / 2 ) ; ?>"
+					data-display='<?php echo $this->input_id;?>'
+					data-min="<?php echo $this->dimens['min']; ?>"
+					data-max="<?php echo $this->dimens['max']; ?>"
+					>
+					</div>
 				</p>
 				<p>
-					Value <input id='<?php echo $this->input_id;?>' value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); ?>/>
+					Value <input data-slider="<?php echo $this->slider_id; ?>" id='<?php echo $this->input_id;?>' value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); ?>/>
 				</p>
 			</div>
 		</label>
-		<script type='text/javascript'>
-		(function(){
-			var display = jQuery("#<?php echo $this->input_id;?>");
-			var slider = jQuery("#<?php echo $this->slider_id; ?>");
-			//setup slider
-			jQuery(function() {
-				slider.slider(
-					{  
-					range: "min",
-					value: <?php echo $this->value() ?  esc_attr( $this->value()) : intval( ( $this->dimens['max'] + $this->dimens['min']) / 2 ) ; ?>,
-					min: <?php echo $this->dimens['min']; ?>,
-					max: <?php echo $this->dimens['max']; ?>,
-					slide: function( event, ui ) {
-						display.val(ui.value); //set value of display to match slider
-						var e = jQuery.Event("keyup");
-						e.which = 50; // Some key code value
-						display.trigger(e); //trigger typing event to prompt ajax
-								}
-							}
-						)
-				});
-			//listen for typed input and adjust slider
-			display.keyup(function() {
-				slider.slider( 'value' , display.val() );
-			});
-		})();
-		</script>
 		<?php
 	}
 }
@@ -101,9 +81,13 @@ class WPEC_Theme_Customizer_Info_Control extends WPEC_Theme_Customizer_Base_Cont
  * Theme Switcher
  */	
 class WPEC_Theme_Customizer_Code_Mirror extends WPEC_Theme_Customizer_Base_Control{
+	public $input_id;
+	public $textarea_id;
 	
 	public function __construct( $manager, $id, $args) {
 		parent::__construct( $manager, $id, $args );
+		$this->input_id = 'input-'.$id;
+		$this->textarea_id = 'textarea-'.$id;
 	}	
 	
 	public function enqueue(){
@@ -111,52 +95,59 @@ class WPEC_Theme_Customizer_Code_Mirror extends WPEC_Theme_Customizer_Base_Contr
 		//code mirror files
 		wp_enqueue_script('code-mirror-library', WPEC_TC_DIRECTORY . '/libraries/CodeMirror-2.24/lib/codemirror.js');
 		wp_enqueue_script('code-mirror-mode-css', WPEC_TC_DIRECTORY . '/libraries/CodeMirror-2.24/mode/css/css.js');
-		wp_enqueue_style('code-mirror-css', WPEC_TC_DIRECTORY . '/libraries/CodeMirror-2.24/lib/codemirror.css'); 
+		wp_enqueue_style('code-mirror-css', WPEC_TC_DIRECTORY . '/libraries/CodeMirror-2.24/lib/codemirror.css');
+		//enqueue custome helper
+		wp_enqueue_script('code-mirror-wpec-tc-helper', WPEC_TC_DIRECTORY . '/js/codemirror.js', array('jquery','code-mirror-library','code-mirror-mode-css')); 
 	}
 	
 	public function render_content() {
 		?>
 		<div class="customize-control-title">CSS Editor</div>
-			<div id='wpec-tc-code-mirror-wrapper' class='wpec-tc-control-wrapper wpec-tc-code-mirror'>
+			<div id='wpec-tc-code-mirror-wrapper' class='wpec-tc-control-wrapper'>
 				
-				<textarea id='wpec-tc-code-mirror' name='wpec-tc-code-mirror'><?php 
-					$code_mirror = split('<LINEBREAK>', $this->value());
-					foreach($code_mirror as $code)
-					{
-						echo "$code".PHP_EOL;  
-					}  
-					?></textarea>
+				<textarea 
+					id='<?php echo $this->textarea_id;?>' 
+					class='wpec-tc-code-mirror' 
+					name='wpec-tc-code-mirror'
+					data-input='#<?php echo $this->input_id;?>'
+					>
+					<?php echo esc_attr( urldecode($this->value()) );?>
+					</textarea>
 				
 				<div class='code-mirror-controls'>
 					
 					<span class='code-mirror-credits'>Powered By CodeMirror</span>
 					<a id='code-mirror-refresh' class='button'>Refresh</a>
 				 </div> 
-					<input hidden='hidden' value="<?php echo esc_attr( $this->value() ); ?>" id='wpec-tc-code-mirror-hidden-value' <?php $this->link(); ?>/>
+					<input value="<?php echo esc_attr( $this->value() ); ?>" id='<?php echo $this->input_id;?>' <?php $this->link(); ?>/>
 			</div>    
-			     
-		<script type='text/javascript'>
-		jQuery(document).ready(function(){
-			var e = jQuery.Event("keyup");
-			e.which = 50; // Some key code value
-			var textarea = document.getElementById('wpec-tc-code-mirror');
-			var myCodeMirror = CodeMirror.fromTextArea(textarea,    
-				{  
-				onUpdate: codemirrorcallback,
-				
-				});
-			function codemirrorcallback(){
-				myCodeMirror.save();
-				jQuery('#wpec-tc-code-mirror-hidden-value').val(textarea.value.replace(/\n\r?/g, '<LINEBREAK>'));
-			}
-			jQuery('#code-mirror-refresh').click(
-			function(){
-				var display = jQuery('#wpec-tc-code-mirror-hidden-value');
-				display.trigger(e); //trigger typing event to prompt ajax
-			});
-		});
-		</script>
-	
+	<script>
+	// var myCodeMirror;
+	// var e = jQuery.Event("keyup");
+	// e.which = 50;
+	// // Some key code value
+	// var textarea = document.getElementById('wpec-tc-code-mirror');
+// 
+	// jQuery('.customize-section').click(function() {
+		// if(jQuery(this).hasClass('open')) {
+			// myCodeMirror = CodeMirror.fromTextArea(textarea, {
+				// onUpdate : codemirrorcallback,
+// 
+			// });
+		// }
+	// });
+	// function codemirrorcallback() {
+		// myCodeMirror.save();
+		// jQuery('#wpec-tc-code-mirror-hidden-value').val(escape(textarea.value));
+	// }
+// 
+// 
+	// jQuery('#code-mirror-refresh').click(function() {
+		// var display = jQuery('#wpec-tc-code-mirror-hidden-value');
+		// display.trigger(e);
+		// //trigger typing event to prompt ajax
+	// });
+	</script>
 	<?php
 	
 	}

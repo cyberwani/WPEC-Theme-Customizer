@@ -63,6 +63,9 @@ class WPEC_Theme_Customizer extends WPEC_Theme_Customizer_Base{
 		//Info Panel
 		$info_page = $radagast -> add_section('wpec_about_page', 'About Page');
 			$info_page->add_info('The WPEC Theme Customizer');
+		//CSS Page
+		$css_page = $radagast -> add_section('wpec_css_page', 'CSS Editor');
+			$css_page->add_code_mirror();
 		//Products Page
 		$product_page = $radagast -> add_section('wpec_product_page', 'Product Page');
 			$product_page->add_radio('wpec_toapi_pp_rating', 'Show Product Ratings', false);
