@@ -103,7 +103,7 @@ class WPEC_Theme_Customizer extends WPEC_Theme_Customizer_Base{
 			$gold_cart = $radagast->add_section('wpec_gold_cart','Gold Cart Settings');
 				$gold_cart->add_radio('wpec_toapi_gc_search','Display Search',false);
 				$gold_cart->add_select('wpec_toapi_gc_display_gallery','Display Thumbail Gallery', array('Off','Single Product','Main Product','Both'));
-				$gold_cart->add_select('wpec_toapi_gc_product_display_view','Product Display View', array('Default','Grid','Grid'));
+				$gold_cart->add_select('wpec_toapi_gc_product_display_view','Product Display View', array('Default','Grid','List'));
 				$gold_cart->add_textfield('wpec_toapi_gc_gallery_image_size_width', 'Thumbnail Width', 50);
 				$gold_cart->add_textfield('wpec_toapi_gc_gallery_image_size_height', 'Thumbnail Height', 50);
 				$gold_cart->add_textfield('wpec_toapi_gc_grid_view_size_width', 'Grid Width', 50);
